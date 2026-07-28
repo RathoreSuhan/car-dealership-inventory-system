@@ -1,28 +1,27 @@
 # Car Dealership Inventory System
 
-## Overview
+A full-stack Car Dealership Inventory System built as part of the Incubyte TDD Kata.
 
-A full-stack Car Dealership Inventory System built using Spring Boot and React following Test Driven Development (TDD), SOLID Principles, and Clean Code practices.
+## Technology
 
-## Tech Stack
-
-### Backend
+Backend
 
 - Java 21
 - Spring Boot
 - Spring Security
-- Spring Data JPA
 - PostgreSQL
-- JWT
+- Spring Data JPA
 - JUnit 5
 - Mockito
 
-### Frontend
+Frontend
 
 - React
 - Tailwind CSS
-- Axios
 
----
+## Development Approach
 
-Project is currently under development.
+- Test Driven Development (TDD)
+- SOLID Principles
+- Clean Code
+- Git-based incremental development

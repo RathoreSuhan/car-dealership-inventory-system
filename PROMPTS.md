@@ -12,3 +12,14 @@ How should I structure a production-ready Spring Boot project for a Car Dealersh
 - Suggested backend-first development.
 - Planned TDD workflow (Red-Green-Refactor).
 - Planned Git commit strategy.
+
+
+## Prompt
+
+How should Phase 1 of the backend be structured for a Spring Boot TDD project?
+
+## Summary
+
+- Planned infrastructure setup before feature development.
+- Decided to configure PostgreSQL, JUnit, Mockito, and JaCoCo first.
+- Established small, meaningful Git commits following TDD.
