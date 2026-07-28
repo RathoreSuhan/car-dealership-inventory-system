@@ -44,3 +44,14 @@ How should the backend package structure be organized before implementing any bu
 - Adopted a package-by-feature architecture instead of package-by-layer.
 - Created top-level modules for authentication, vehicles, inventory, configuration, security, shared utilities, and exception handling.
 - Deferred controllers, services, and repositories until the corresponding feature is developed through TDD.
+
+## Prompt
+
+How should JUnit 5, Mockito, and JaCoCo be prepared before implementing backend features in a Spring Boot project following Test Driven Development?
+
+## Summary
+
+- Added explicit Mockito support for unit testing.
+- Verified the JUnit 5 environment with a simple Arrange–Act–Assert test.
+- Confirmed JaCoCo generates code coverage reports.
+- Established the testing infrastructure before writing business logic.
