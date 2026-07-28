@@ -1,0 +1,27 @@
+# IntelliJ
+.idea/
+*.iml
+
+# VS Code
+.vscode/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Node Modules
+node_modules/
+
+# Build folders
+build/
+dist/
+target/
+
+# Environment
+.env
+
+# Maven Wrapper Jar (keep wrapper scripts)
+!.mvn/wrapper/maven-wrapper.jar
