@@ -4,6 +4,7 @@ import com.incubyte.backend.auth.dto.RegisterRequest;
 import com.incubyte.backend.auth.dto.RegisterResponse;
 import com.incubyte.backend.auth.repository.UserRepository;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -22,10 +23,20 @@ class AuthServiceTest {
 
         // Arrange
 
-        UserRepository repository = mock(UserRepository.class);
+        UserRepository repository =
+                mock(UserRepository.class);
+
+        PasswordEncoder passwordEncoder =
+                mock(PasswordEncoder.class);
+
+        when(passwordEncoder.encode("Password@123"))
+                .thenReturn("encoded-password");
 
         AuthService authService =
-                new AuthService(repository);
+                new AuthService(
+                        repository,
+                        passwordEncoder
+                );
 
         RegisterRequest request =
                 new RegisterRequest(
@@ -45,6 +56,9 @@ class AuthServiceTest {
 
         verify(repository, times(1))
                 .save(any());
+
+        verify(passwordEncoder)
+                .encode("Password@123");
 
     }
 
