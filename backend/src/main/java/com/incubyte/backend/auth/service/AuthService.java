@@ -2,27 +2,44 @@ package com.incubyte.backend.auth.service;
 
 import com.incubyte.backend.auth.dto.RegisterRequest;
 import com.incubyte.backend.auth.dto.RegisterResponse;
+import com.incubyte.backend.auth.entity.User;
+import com.incubyte.backend.auth.repository.UserRepository;
 
 /**
- * Handles authentication-related business operations.
- *
- * NOTE:
- * This is the first GREEN implementation.
- * We intentionally keep it tiny.
+ * Handles authentication use cases.
  */
 public class AuthService {
 
     /**
+     * Repository dependency.
+     */
+    private final UserRepository userRepository;
+
+    /**
+     * Constructor Injection.
+     */
+    public AuthService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    /**
      * Registers a new user.
-     *
-     * For the first GREEN step we are NOT interacting with the database.
      */
     public RegisterResponse register(RegisterRequest request) {
 
-        return RegisterResponse.builder()
-                .id(1L)
+        User user = User.builder()
                 .name(request.getName())
                 .email(request.getEmail())
+                .password(request.getPassword())
+                .build();
+
+        // Persist user.
+        userRepository.save(user);
+
+        return RegisterResponse.builder()
+                .id(1L)
+                .name(user.getName())
+                .email(user.getEmail())
                 .message("Registration successful")
                 .build();
 
