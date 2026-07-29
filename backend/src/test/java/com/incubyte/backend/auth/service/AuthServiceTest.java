@@ -4,6 +4,7 @@ import com.incubyte.backend.auth.dto.RegisterRequest;
 import com.incubyte.backend.auth.dto.RegisterResponse;
 import com.incubyte.backend.auth.entity.User;
 import com.incubyte.backend.auth.repository.UserRepository;
+import com.incubyte.backend.exception.EmailAlreadyExistsException;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -92,11 +93,9 @@ class AuthServiceTest {
 
         // Act + Assert
 
-        IllegalArgumentException exception =
+        EmailAlreadyExistsException exception =
                 assertThrows(
-                        IllegalArgumentException.class,
-                        () -> authService.register(request)
-                );
+                        EmailAlreadyExistsException.class,
 
         assertEquals(
                 "Email already registered",
