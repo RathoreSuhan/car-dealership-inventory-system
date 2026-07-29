@@ -44,8 +44,10 @@ public class AuthService {
             );
         }
 
-        User user =
-                UserMapper.toUser(request);
+        User user = UserMapper.toUser(request);
+
+        // Every newly registered account is a USER.
+        user.setRole("USER");
 
         user.setPassword(
 

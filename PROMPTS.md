@@ -55,3 +55,92 @@ How should JUnit 5, Mockito, and JaCoCo be prepared before implementing backend 
 - Verified the JUnit 5 environment with a simple Arrange–Act–Assert test.
 - Confirmed JaCoCo generates code coverage reports.
 - Established the testing infrastructure before writing business logic.
+
+## Prompt
+
+How should I start implementing user registration using strict Test Driven Development in a Spring Boot application?
+
+## Summary
+
+- Identified the first business requirement for user registration.
+- Created the first failing service-level test before writing production code.
+- Chose to begin testing at the service layer because it contains the business logic.
+- Established the RED phase of the TDD cycle.
+
+## Prompt
+
+How should I begin implementing user registration using strict Test Driven Development in Spring Boot?
+
+## Summary
+
+- Replaced a placeholder failing test with a real business-oriented unit test.
+- Introduced request and response DTOs to keep the API independent from persistence.
+- Defined the first business requirement: successful user registration.
+- Began the RED phase by writing a test before creating the service implementation.
+
+## Prompt
+
+How should I implement the first GREEN step of user registration while following strict TDD?
+
+## Summary
+
+- Implemented only the minimum AuthService required to satisfy the initial registration test.
+- Deliberately avoided introducing persistence or database access because no test required it yet.
+- Returned a simple RegisterResponse built from the request data.
+
+## Prompt
+
+How should I evolve my registration feature from an in-memory implementation to persistence while following strict TDD?
+
+## Summary
+
+- Added a new business requirement that registration must persist users.
+- Introduced a JPA User entity and Spring Data JPA repository.
+- Switched the service to constructor injection.
+- Used Mockito to verify repository interaction without connecting to PostgreSQL.
+- Completed another RED → GREEN cycle before adding more features.
+
+## Prompt
+
+How should duplicate email registration be implemented while following strict Test Driven Development?
+
+## Summary
+
+- Added a new business requirement that email addresses must be unique.
+- Wrote a failing unit test using Mockito to simulate an existing user.
+- Added a derived query method (`existsByEmail`) to the repository.
+- Implemented the minimum service logic to reject duplicate registrations.
+- Completed another RED → GREEN cycle without introducing unnecessary infrastructure.
+
+## Prompt
+
+How should I refactor my registration service after completing the GREEN phase while following strict TDD and SOLID principles?
+
+## Summary
+
+- Extracted object conversion logic into a dedicated UserMapper.
+- Simplified AuthService by removing DTO-to-Entity and Entity-to-DTO conversion code.
+- Applied the Single Responsibility Principle without changing behavior.
+- Completed the REFACTOR phase while keeping all tests passing.
+
+## Prompt
+
+How should password encoding be introduced into the registration workflow while following strict Test Driven Development?
+
+## Summary
+
+- Added a failing unit test requiring password encoding before persistence.
+- Introduced PasswordEncoder as a constructor dependency.
+- Used Mockito to verify that the password is encoded during registration.
+- Kept encryption inside the service layer to preserve the mapper's single responsibility.
+
+## Prompt
+
+How should I replace generic exceptions with domain-specific exceptions while continuing to follow strict TDD?
+
+## Summary
+
+- Introduced EmailAlreadyExistsException for duplicate registrations.
+- Updated the unit test first (RED).
+- Replaced IllegalArgumentException in the service (GREEN).
+- Prepared the service for centralized exception handling in future REST APIs.

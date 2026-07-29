@@ -41,4 +41,11 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    /**
+     * Role of the user.
+     * USER or ADMIN
+     */
+    @Column(nullable = false)
+    private String role;
+
 }
