@@ -218,3 +218,21 @@ Introduce the JWT authentication filter before implementing token validation.
 - Implemented JwtAuthenticationFilter by extending OncePerRequestFilter.
 - Allowed all requests to continue through the filter chain while postponing JWT validation to the next iteration.
 - Applied the Single Responsibility Principle by separating filter creation from authentication logic.
+
+## Prompt
+
+How should I authenticate incoming HTTP requests using JwtAuthenticationFilter while following Test-Driven Development and SOLID principles?
+
+## AI Assistance Summary
+
+### Goal
+
+Authenticate requests carrying JWT tokens before implementing authorization rules.
+
+### Guidance Received
+
+- Updated JwtAuthenticationFilter to extract JWTs from the Authorization header.
+- Integrated JwtService and CustomUserDetailsService for user authentication.
+- Added username extraction support in JwtService.
+- Stored authenticated users inside Spring Security's SecurityContextHolder.
+- Continued following the Red → Green workflow while keeping JWT parsing separate from validation logic.
