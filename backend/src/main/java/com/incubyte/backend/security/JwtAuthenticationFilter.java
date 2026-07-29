@@ -72,20 +72,23 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     userDetailsService
                             .loadUserByUsername(username);
 
-            UsernamePasswordAuthenticationToken authToken =
-                    new UsernamePasswordAuthenticationToken(
+            // Authenticate only when JWT is valid.
+            if (jwtService.isTokenValid(jwt, userDetails)) {
 
-                            userDetails,
+                UsernamePasswordAuthenticationToken authToken =
+                        new UsernamePasswordAuthenticationToken(
 
-                            null,
+                                userDetails,
+                                null,
+                                userDetails.getAuthorities()
 
-                            userDetails.getAuthorities()
+                        );
 
-                    );
+                SecurityContextHolder
+                        .getContext()
+                        .setAuthentication(authToken);
 
-            SecurityContextHolder
-                    .getContext()
-                    .setAuthentication(authToken);
+            }
 
         }
 

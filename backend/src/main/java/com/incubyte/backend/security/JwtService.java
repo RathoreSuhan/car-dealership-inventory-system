@@ -73,6 +73,39 @@ public class JwtService {
                 .getSubject();
     }
 
+    /**
+     * Checks whether the JWT has expired.
+     */
+    private boolean isTokenExpired(String token) {
+
+        return extractAllClaims(token)
+
+                .getExpiration()
+
+                .before(new Date());
+
+    }
+
+    /**
+     * Validates the JWT against the authenticated user.
+     */
+    public boolean isTokenValid(
+            String token,
+            UserDetails userDetails
+    ) {
+
+        String username =
+                extractUsername(token);
+
+        return username.equals(
+                userDetails.getUsername())
+
+                &&
+
+                !isTokenExpired(token);
+
+    }
+
 
     /**
      * Creates signing key from configured secret.
