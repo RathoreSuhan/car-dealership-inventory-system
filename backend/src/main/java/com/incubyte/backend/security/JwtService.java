@@ -6,7 +6,7 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-
+import io.jsonwebtoken.Claims;
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
@@ -30,10 +30,7 @@ public class JwtService {
      */
     public String generateToken(UserDetails userDetails) {
 
-        SecretKey key =
-                Keys.hmacShaKeyFor(
-                        jwtSecret.getBytes(
-                                StandardCharsets.UTF_8));
+        SecretKey key = getSigningKey();
 
         return Jwts.builder()
 
@@ -65,6 +62,45 @@ public class JwtService {
                 .signWith(key)
 
                 .compact();
+
+    }
+
+    /**
+     * Returns username(email) stored inside JWT.
+     */
+    public String extractUsername(String token){
+        return extractAllClaims(token)
+                .getSubject();
+    }
+
+
+    /**
+     * Creates signing key from configured secret.
+     */
+    private SecretKey getSigningKey() {
+
+        return Keys.hmacShaKeyFor(
+                jwtSecret.getBytes(
+                        StandardCharsets.UTF_8
+                )
+        );
+
+    }
+
+    /**
+     * Extracts all JWT claims.
+     */
+    private Claims extractAllClaims(String token) {
+
+        return Jwts.parser()
+
+                .verifyWith(getSigningKey())
+
+                .build()
+
+                .parseSignedClaims(token)
+
+                .getPayload();
 
     }
 
