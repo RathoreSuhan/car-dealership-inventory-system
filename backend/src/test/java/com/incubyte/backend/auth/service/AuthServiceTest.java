@@ -1,12 +1,17 @@
 package com.incubyte.backend.auth.service;
 
+import com.incubyte.backend.auth.dto.LoginRequest;
+import com.incubyte.backend.auth.dto.LoginResponse;
 import com.incubyte.backend.auth.dto.RegisterRequest;
 import com.incubyte.backend.auth.dto.RegisterResponse;
 import com.incubyte.backend.auth.entity.User;
 import com.incubyte.backend.auth.repository.UserRepository;
 import com.incubyte.backend.exception.EmailAlreadyExistsException;
+import com.incubyte.backend.exception.UserNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -102,6 +107,75 @@ class AuthServiceTest {
         assertEquals(
                 "Email already registered",
                 exception.getMessage()
+        );
+
+    }
+
+    @Test
+    void shouldLoginSuccessfully() {
+
+        UserRepository repository = mock(UserRepository.class);
+
+        PasswordEncoder encoder = mock(PasswordEncoder.class);
+
+        AuthService service = new AuthService(repository, encoder);
+
+        User user = User.builder()
+                .id(1L)
+                .name("Suhan")
+                .email("suhan@gmail.com")
+                .password("encoded-password")
+                .build();
+
+        when(repository.findByEmail("suhan@gmail.com"))
+                .thenReturn(Optional.of(user));
+
+        when(encoder.matches(
+                "Password@123",
+                "encoded-password"))
+                .thenReturn(true);
+
+        LoginResponse response =
+                service.login(
+
+                        new LoginRequest(
+                                "suhan@gmail.com",
+                                "Password@123"
+                        )
+                );
+
+        assertEquals(
+                "Login successful",
+                response.getMessage());
+
+    }
+
+    @Test
+    void shouldThrowExceptionWhenUserDoesNotExist() {
+
+        UserRepository repository =
+                mock(UserRepository.class);
+
+        PasswordEncoder encoder =
+                mock(PasswordEncoder.class);
+
+        AuthService service =
+                new AuthService(repository, encoder);
+
+        when(repository.findByEmail(any()))
+                .thenReturn(Optional.empty());
+
+        assertThrows(
+
+                UserNotFoundException.class,
+
+                () -> service.login(
+
+                        new LoginRequest(
+                                "abc@gmail.com",
+                                "123456"
+                        )
+                )
         );
 
     }
