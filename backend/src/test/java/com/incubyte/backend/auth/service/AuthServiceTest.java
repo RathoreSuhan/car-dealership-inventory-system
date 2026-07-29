@@ -2,18 +2,18 @@ package com.incubyte.backend.auth.service;
 
 import com.incubyte.backend.auth.dto.RegisterRequest;
 import com.incubyte.backend.auth.dto.RegisterResponse;
+import com.incubyte.backend.auth.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.*;
 
 /**
- * Unit tests for authentication service.
+ * Unit tests for AuthService.
  *
- * Following strict TDD:
- *
- * RED
- * GREEN
- * REFACTOR
+ * Pure unit tests:
+ * No Spring Context.
+ * No PostgreSQL.
  */
 class AuthServiceTest {
 
@@ -22,14 +22,17 @@ class AuthServiceTest {
 
         // Arrange
 
+        UserRepository repository = mock(UserRepository.class);
+
+        AuthService authService =
+                new AuthService(repository);
+
         RegisterRequest request =
                 new RegisterRequest(
                         "Suhan Kumar Singh",
                         "suhan@gmail.com",
                         "Password@123"
                 );
-
-        AuthService authService = new AuthService();
 
         // Act
 
@@ -39,6 +42,9 @@ class AuthServiceTest {
         // Assert
 
         assertNotNull(response);
+
+        verify(repository, times(1))
+                .save(any());
 
     }
 
