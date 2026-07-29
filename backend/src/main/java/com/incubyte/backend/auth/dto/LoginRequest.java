@@ -17,12 +17,12 @@ import lombok.Setter;
 public class LoginRequest {
 
     // User email
-    @Email
-    @NotBlank
+    @NotBlank(message = "Email is required")
+    @Email(message = "Invalid email")
     private String email;
 
     // Raw password entered by user
-    @NotBlank
+    @NotBlank(message = "Password is required")
     private String password;
 
 }
