@@ -1,25 +1,44 @@
 package com.incubyte.backend.auth.service;
 
+import com.incubyte.backend.auth.dto.RegisterRequest;
+import com.incubyte.backend.auth.dto.RegisterResponse;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
- * Authentication service tests.
+ * Unit tests for authentication service.
  *
  * Following strict TDD:
- * RED -> GREEN -> REFACTOR
+ *
+ * RED
+ * GREEN
+ * REFACTOR
  */
 class AuthServiceTest {
 
     @Test
     void shouldRegisterNewUserSuccessfully() {
 
-        // RED Phase
-        // This test intentionally fails because
-        // AuthService does not exist yet.
+        // Arrange
 
-        fail("AuthService has not been implemented yet.");
+        RegisterRequest request =
+                new RegisterRequest(
+                        "Suhan Kumar Singh",
+                        "suhan@gmail.com",
+                        "Password@123"
+                );
+
+        AuthService authService = new AuthService();
+
+        // Act
+
+        RegisterResponse response =
+                authService.register(request);
+
+        // Assert
+
+        assertNotNull(response);
 
     }
 
