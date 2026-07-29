@@ -274,3 +274,22 @@ Configure Spring Security to use JWT authentication for protected REST APIs.
 - Registered JwtAuthenticationFilter before Spring Security's default authentication filter.
 - Allowed unauthenticated access only to authentication endpoints.
 - Exposed AuthenticationManager for future authentication refactoring.
+
+
+## Prompt
+
+How should I begin implementing the Vehicle module while continuing to follow Test-Driven Development and SOLID principles?
+
+## AI Assistance Summary
+
+### Goal
+
+Start the Vehicle module by defining the domain model and creating the first failing service test.
+
+### Guidance Received
+
+- Designed the Vehicle entity and persistence layer.
+- Created request/response DTOs.
+- Added a mapper to isolate object conversion.
+- Wrote the first failing unit test for vehicle creation before implementing the service.
+- Continued following the Red-Green-Refactor workflow.
