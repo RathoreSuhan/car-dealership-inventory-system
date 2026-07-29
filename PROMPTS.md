@@ -144,3 +144,23 @@ How should I replace generic exceptions with domain-specific exceptions while co
 - Updated the unit test first (RED).
 - Replaced IllegalArgumentException in the service (GREEN).
 - Prepared the service for centralized exception handling in future REST APIs.
+
+## Prompt
+
+How should I implement JWT authentication in a Spring Boot application while following Test-Driven Development and keeping the security layer clean and maintainable?
+
+## AI Assistance Summary
+
+### Goal
+
+Implement JWT-based authentication after completing user registration and login while following the Red → Green → Refactor workflow.
+
+### Guidance Received
+
+- Planned the authentication module before implementation.
+- Added JWT library dependencies.
+- Extended the User entity with a role field.
+- Assigned the default `USER` role during registration.
+- Planned security components including JwtService, JwtAuthenticationFilter, SecurityConfig, and CustomUserDetailsService.
+- Chose to implement JWT incrementally instead of mixing authentication and business logic.
+- Kept authentication concerns separated from service-layer business logic following SOLID principles.

@@ -10,6 +10,7 @@ import com.incubyte.backend.exception.EmailAlreadyExistsException;
 import com.incubyte.backend.auth.repository.UserRepository;
 import com.incubyte.backend.exception.InvalidPasswordException;
 import com.incubyte.backend.exception.UserNotFoundException;
+import com.incubyte.backend.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,8 @@ public class AuthService {
 
     // Used to hash passwords before storing them
     private final PasswordEncoder passwordEncoder;
+
+    private final JwtService jwtService;
 
 
     /**
@@ -83,7 +86,7 @@ public class AuthService {
 
         // JWT will be added later
         return LoginResponse.builder()
-                .token("TEMP_TOKEN")
+                .token(jwtService.generateToken(user))
                 .message("Login successful")
                 .build();
 

@@ -8,6 +8,7 @@ import com.incubyte.backend.auth.entity.User;
 import com.incubyte.backend.auth.repository.UserRepository;
 import com.incubyte.backend.exception.EmailAlreadyExistsException;
 import com.incubyte.backend.exception.UserNotFoundException;
+import com.incubyte.backend.security.JwtService;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -36,13 +37,17 @@ class AuthServiceTest {
         PasswordEncoder passwordEncoder =
                 mock(PasswordEncoder.class);
 
+        JwtService jwtService =
+                mock(JwtService.class);
+
         when(passwordEncoder.encode("Password@123"))
                 .thenReturn("encoded-password");
 
         AuthService authService =
                 new AuthService(
                         repository,
-                        passwordEncoder
+                        passwordEncoder,
+                        jwtService
                 );
 
         RegisterRequest request =
@@ -59,7 +64,21 @@ class AuthServiceTest {
 
         // Assert
 
-        assertNotNull(response);
+        assertAll(
+
+                () -> assertEquals(
+                        "Suhan Kumar Singh",
+                        response.getName()),
+
+                () -> assertEquals(
+                        "suhan@gmail.com",
+                        response.getEmail()),
+
+                () -> assertEquals(
+                        "Registration successful",
+                        response.getMessage())
+
+        );
 
         verify(repository)
                 .save(any(User.class));
@@ -80,13 +99,17 @@ class AuthServiceTest {
         PasswordEncoder passwordEncoder =
                 mock(PasswordEncoder.class);
 
+        JwtService jwtService =
+                mock(JwtService.class);
+
         when(repository.existsByEmail("suhan@gmail.com"))
                 .thenReturn(true);
 
         AuthService authService =
                 new AuthService(
                         repository,
-                        passwordEncoder
+                        passwordEncoder,
+                        jwtService
                 );
 
         RegisterRequest request =
@@ -118,7 +141,9 @@ class AuthServiceTest {
 
         PasswordEncoder encoder = mock(PasswordEncoder.class);
 
-        AuthService service = new AuthService(repository, encoder);
+        JwtService jwtService = mock(JwtService.class);
+
+        AuthService service = new AuthService(repository, encoder, jwtService);
 
         User user = User.builder()
                 .id(1L)
@@ -135,18 +160,30 @@ class AuthServiceTest {
                 "encoded-password"))
                 .thenReturn(true);
 
+        // JWT service behavior must be defined BEFORE login()
+        when(jwtService.generateToken(user))
+                .thenReturn("jwt-token");
+
+        // Act
         LoginResponse response =
                 service.login(
-
                         new LoginRequest(
                                 "suhan@gmail.com",
                                 "Password@123"
                         )
                 );
 
+        // Assert
         assertEquals(
                 "Login successful",
                 response.getMessage());
+
+        assertEquals(
+                "jwt-token",
+                response.getToken());
+
+        verify(jwtService)
+                .generateToken(user);
 
     }
 
@@ -159,8 +196,15 @@ class AuthServiceTest {
         PasswordEncoder encoder =
                 mock(PasswordEncoder.class);
 
+        JwtService jwtService =
+                mock(JwtService.class);
+
         AuthService service =
-                new AuthService(repository, encoder);
+                new AuthService(
+                        repository,
+                        encoder,
+                        jwtService
+                );
 
         when(repository.findByEmail(any()))
                 .thenReturn(Optional.empty());
