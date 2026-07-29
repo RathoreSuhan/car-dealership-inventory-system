@@ -5,7 +5,7 @@ import com.incubyte.backend.auth.dto.RegisterResponse;
 import com.incubyte.backend.auth.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
@@ -45,6 +45,41 @@ class AuthServiceTest {
 
         verify(repository, times(1))
                 .save(any());
+
+    }
+
+    @Test
+    void shouldThrowExceptionWhenEmailAlreadyExists() {
+
+        // Arrange
+
+        UserRepository repository = mock(UserRepository.class);
+
+        when(repository.existsByEmail("suhan@gmail.com"))
+                .thenReturn(true);
+
+        AuthService authService =
+                new AuthService(repository);
+
+        RegisterRequest request =
+                new RegisterRequest(
+                        "Suhan Kumar Singh",
+                        "suhan@gmail.com",
+                        "Password@123"
+                );
+
+        // Act + Assert
+
+        IllegalArgumentException exception =
+                assertThrows(
+                        IllegalArgumentException.class,
+                        () -> authService.register(request)
+                );
+
+        assertEquals(
+                "Email already registered",
+                exception.getMessage()
+        );
 
     }
 
