@@ -27,13 +27,20 @@ public class AuthService {
      */
     public RegisterResponse register(RegisterRequest request) {
 
+        // Business rule:
+        // A user cannot register twice with the same email.
+        if (userRepository.existsByEmail(request.getEmail())) {
+            throw new IllegalArgumentException(
+                    "Email already registered"
+            );
+        }
+
         User user = User.builder()
                 .name(request.getName())
                 .email(request.getEmail())
                 .password(request.getPassword())
                 .build();
 
-        // Persist user.
         userRepository.save(user);
 
         return RegisterResponse.builder()
@@ -44,5 +51,7 @@ public class AuthService {
                 .build();
 
     }
+
+
 
 }
