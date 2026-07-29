@@ -5,22 +5,27 @@ import com.incubyte.backend.auth.dto.RegisterResponse;
 import com.incubyte.backend.auth.entity.User;
 import com.incubyte.backend.auth.mapper.UserMapper;
 import com.incubyte.backend.auth.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 /**
  * Handles authentication use cases.
  */
+@Service
 public class AuthService {
 
     /**
      * Repository dependency.
      */
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * Constructor Injection.
      */
-    public AuthService(UserRepository userRepository) {
+    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     /**
@@ -36,7 +41,16 @@ public class AuthService {
             );
         }
 
-        User user = UserMapper.toUser(request);
+        User user =
+                UserMapper.toUser(request);
+
+        user.setPassword(
+
+                passwordEncoder.encode(
+                        request.getPassword()
+                )
+
+        );
 
         userRepository.save(user);
 

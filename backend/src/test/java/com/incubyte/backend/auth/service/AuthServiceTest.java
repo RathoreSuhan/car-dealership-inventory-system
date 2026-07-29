@@ -2,6 +2,7 @@ package com.incubyte.backend.auth.service;
 
 import com.incubyte.backend.auth.dto.RegisterRequest;
 import com.incubyte.backend.auth.dto.RegisterResponse;
+import com.incubyte.backend.auth.entity.User;
 import com.incubyte.backend.auth.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -54,8 +55,8 @@ class AuthServiceTest {
 
         assertNotNull(response);
 
-        verify(repository, times(1))
-                .save(any());
+        verify(repository)
+                .save(any(User.class));
 
         verify(passwordEncoder)
                 .encode("Password@123");
@@ -67,13 +68,20 @@ class AuthServiceTest {
 
         // Arrange
 
-        UserRepository repository = mock(UserRepository.class);
+        UserRepository repository =
+                mock(UserRepository.class);
+
+        PasswordEncoder passwordEncoder =
+                mock(PasswordEncoder.class);
 
         when(repository.existsByEmail("suhan@gmail.com"))
                 .thenReturn(true);
 
         AuthService authService =
-                new AuthService(repository);
+                new AuthService(
+                        repository,
+                        passwordEncoder
+                );
 
         RegisterRequest request =
                 new RegisterRequest(
