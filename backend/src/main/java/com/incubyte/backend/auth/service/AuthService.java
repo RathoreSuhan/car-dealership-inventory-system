@@ -3,6 +3,7 @@ package com.incubyte.backend.auth.service;
 import com.incubyte.backend.auth.dto.RegisterRequest;
 import com.incubyte.backend.auth.dto.RegisterResponse;
 import com.incubyte.backend.auth.entity.User;
+import com.incubyte.backend.auth.mapper.UserMapper;
 import com.incubyte.backend.auth.repository.UserRepository;
 
 /**
@@ -35,20 +36,11 @@ public class AuthService {
             );
         }
 
-        User user = User.builder()
-                .name(request.getName())
-                .email(request.getEmail())
-                .password(request.getPassword())
-                .build();
+        User user = UserMapper.toUser(request);
 
         userRepository.save(user);
 
-        return RegisterResponse.builder()
-                .id(1L)
-                .name(user.getName())
-                .email(user.getEmail())
-                .message("Registration successful")
-                .build();
+        return UserMapper.toRegisterResponse(user);
 
     }
 
