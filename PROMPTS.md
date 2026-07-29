@@ -236,3 +236,41 @@ Authenticate requests carrying JWT tokens before implementing authorization rule
 - Added username extraction support in JwtService.
 - Stored authenticated users inside Spring Security's SecurityContextHolder.
 - Continued following the Red → Green workflow while keeping JWT parsing separate from validation logic.
+
+
+## Prompt
+
+How should I validate JWT tokens before authenticating incoming requests while following Test-Driven Development and SOLID principles?
+
+## AI Assistance Summary
+
+### Goal
+
+Validate JWT tokens before creating an authenticated SecurityContext.
+
+### Guidance Received
+
+- Updated JwtAuthenticationFilter to authenticate only after validating the JWT.
+- Added token validation methods to JwtService.
+- Verified username matching and token expiration.
+- Reused JWT signature verification provided by the JJWT parser.
+- Kept authentication stateless by relying on JWT instead of rechecking user credentials.
+
+
+## Prompt
+
+How should I configure Spring Security using SecurityFilterChain for a stateless JWT authentication system while following SOLID principles?
+
+## AI Assistance Summary
+
+### Goal
+
+Configure Spring Security to use JWT authentication for protected REST APIs.
+
+### Guidance Received
+
+- Created a dedicated SecurityConfig class.
+- Configured stateless session management.
+- Registered JwtAuthenticationFilter before Spring Security's default authentication filter.
+- Allowed unauthenticated access only to authentication endpoints.
+- Exposed AuthenticationManager for future authentication refactoring.
