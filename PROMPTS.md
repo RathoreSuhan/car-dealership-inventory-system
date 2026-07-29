@@ -200,3 +200,21 @@ Allow Spring Security to load users from the database before implementing JWT au
 - Loaded users from PostgreSQL using the UserRepository.
 - Used the existing User entity as the UserDetails implementation.
 - Applied the Dependency Inversion Principle by allowing authentication to depend on the UserDetailsService abstraction instead of directly accessing the repository.
+
+
+## Prompt
+
+How should I introduce a JWT authentication filter in Spring Boot while following Test-Driven Development and SOLID principles?
+
+## AI Assistance Summary
+
+### Goal
+
+Introduce the JWT authentication filter before implementing token validation.
+
+### Guidance Received
+
+- Created a failing unit test before implementing the filter.
+- Implemented JwtAuthenticationFilter by extending OncePerRequestFilter.
+- Allowed all requests to continue through the filter chain while postponing JWT validation to the next iteration.
+- Applied the Single Responsibility Principle by separating filter creation from authentication logic.
