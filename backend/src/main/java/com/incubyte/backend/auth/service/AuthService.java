@@ -4,6 +4,7 @@ import com.incubyte.backend.auth.dto.RegisterRequest;
 import com.incubyte.backend.auth.dto.RegisterResponse;
 import com.incubyte.backend.auth.entity.User;
 import com.incubyte.backend.auth.mapper.UserMapper;
+import com.incubyte.backend.exception.EmailAlreadyExistsException;
 import com.incubyte.backend.auth.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -36,7 +37,7 @@ public class AuthService {
         // Business rule:
         // A user cannot register twice with the same email.
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new IllegalArgumentException(
+            throw new EmailAlreadyExistsException(
                     "Email already registered"
             );
         }

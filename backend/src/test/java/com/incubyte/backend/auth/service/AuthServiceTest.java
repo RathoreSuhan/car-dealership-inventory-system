@@ -96,6 +96,8 @@ class AuthServiceTest {
         EmailAlreadyExistsException exception =
                 assertThrows(
                         EmailAlreadyExistsException.class,
+                        () -> authService.register(request)
+                );
 
         assertEquals(
                 "Email already registered",
