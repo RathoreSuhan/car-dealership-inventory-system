@@ -164,3 +164,39 @@ Implement JWT-based authentication after completing user registration and login 
 - Planned security components including JwtService, JwtAuthenticationFilter, SecurityConfig, and CustomUserDetailsService.
 - Chose to implement JWT incrementally instead of mixing authentication and business logic.
 - Kept authentication concerns separated from service-layer business logic following SOLID principles.
+
+## Prompt
+
+How should I integrate Spring Security's UserDetails into my authentication module while continuing to follow Test-Driven Development and SOLID principles?
+
+## AI Assistance Summary
+
+### Goal
+
+Integrate Spring Security's authentication model with the existing User entity before implementing JWT validation and protected endpoints.
+
+### Guidance Received
+
+- Updated the User entity to implement the UserDetails interface.
+- Implemented all required UserDetails methods with explanatory comments.
+- Refactored JwtService to use UserDetails instead of directly depending on the User entity.
+- Preserved existing unit tests through polymorphism.
+- Applied the Dependency Inversion Principle by depending on the UserDetails abstraction rather than a concrete entity.
+
+## Prompt
+
+How should I integrate Spring Security with my PostgreSQL UserRepository while following Test-Driven Development and SOLID principles?
+
+## AI Assistance Summary
+
+### Goal
+
+Allow Spring Security to load users from the database before implementing JWT authentication filters.
+
+### Guidance Received
+
+- Created unit tests for CustomUserDetailsService before implementation.
+- Implemented Spring Security's UserDetailsService interface.
+- Loaded users from PostgreSQL using the UserRepository.
+- Used the existing User entity as the UserDetails implementation.
+- Applied the Dependency Inversion Principle by allowing authentication to depend on the UserDetailsService abstraction instead of directly accessing the repository.
