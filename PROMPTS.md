@@ -638,3 +638,21 @@ Create a reusable admin interface for managing vehicles without changing the bac
 - Designed reusable components for vehicle forms, tables, and confirmation dialogs.
 - Reused the existing Axios service layer for create, update, delete, and restock operations.
 - Structured the UI to keep business logic inside pages and presentation logic inside reusable components.
+
+
+## Prompt
+
+Build a reusable vehicle form for the admin module using the existing Spring Boot validation rules and create API.
+
+## AI Assistance Summary
+
+### Goal
+
+Implement a reusable form component that can be shared between vehicle creation and editing while matching backend validation.
+
+### Guidance Received
+
+- Created a reusable `VehicleForm` component with React Hook Form.
+- Mirrored Spring Boot validation constraints (`@NotBlank`, `@Positive`, `@PositiveOrZero`) on the frontend.
+- Built the initial `AdminDashboard` page using the reusable form.
+- Connected the form to the existing `addVehicle` service without changing the backend API.
