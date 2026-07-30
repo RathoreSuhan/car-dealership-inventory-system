@@ -43,6 +43,31 @@ public class VehicleController {
     }
 
     /**
+     * Updates a vehicle.
+     */
+    @PutMapping("/{id}")
+    public ResponseEntity<VehicleResponse> updateVehicle(
+
+            @PathVariable Long id,
+
+            @Valid
+            @RequestBody
+            CreateVehicleRequest request
+
+    ) {
+
+        return ResponseEntity.ok(
+
+                vehicleService.updateVehicle(
+                        id,
+                        request
+                )
+
+        );
+
+    }
+
+    /**
      * Get all vehicles.
      */
     @GetMapping

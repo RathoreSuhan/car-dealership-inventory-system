@@ -99,4 +99,32 @@ class VehicleServiceTest {
         verify(repository).save(existingVehicle);
     }
 
+    @Test
+    void shouldPurchaseVehicleSuccessfully() {
+
+        // Arrange
+        Vehicle vehicle = Vehicle.builder()
+                .id(1L)
+                .make("Toyota")
+                .model("Fortuner")
+                .category("SUV")
+                .price(4200000.0)
+                .quantity(5)
+                .build();
+
+        when(vehicleRepository.findById(1L))
+                .thenReturn(Optional.of(vehicle));
+
+        when(vehicleRepository.save(any(Vehicle.class)))
+                .thenAnswer(invocation -> invocation.getArgument(0));
+
+        // Act
+        VehicleResponse response =
+                vehicleService.purchaseVehicle(1L);
+
+        // Assert
+        assertEquals(4, response.getQuantity());
+
+        verify(vehicleRepository).save(vehicle);
+    }
 }

@@ -312,3 +312,22 @@ Implement the core Vehicle management functionality required by the project.
 - Added search functionality by make, model, and category.
 - Protected vehicle APIs with JWT authentication.
 - Continued using DTOs, mappers, and repository abstractions to keep the design clean.
+
+
+## Prompt
+
+How should I implement the update vehicle feature while continuing to follow Red-Green-Refactor TDD and SOLID principles?
+
+## AI Assistance Summary
+
+### Goal
+
+Implement the vehicle update workflow with proper TDD and domain-driven exception handling.
+
+### Guidance Received
+
+- Wrote the failing service-layer test before implementation.
+- Implemented the update business logic in the service layer.
+- Added the update REST endpoint.
+- Replaced a generic RuntimeException with a VehicleNotFoundException during the refactor phase.
+- Preserved clean separation between controller, service, repository, DTO, and mapper layers.
