@@ -83,4 +83,73 @@ public class GlobalExceptionHandler {
 
     }
 
+    @ExceptionHandler(VehicleNotFoundException.class)
+    public ResponseEntity<?> handleVehicleNotFound(
+            VehicleNotFoundException ex
+    ) {
+
+        return ResponseEntity
+
+                .status(HttpStatus.NOT_FOUND)
+
+                .body(
+
+                        Map.of(
+
+                                "timestamp", LocalDateTime.now(),
+
+                                "message", ex.getMessage()
+
+                        )
+
+                );
+
+    }
+
+    @ExceptionHandler(OutOfStockException.class)
+    public ResponseEntity<?> handleOutOfStock(
+            OutOfStockException ex
+    ) {
+
+        return ResponseEntity
+
+                .status(HttpStatus.BAD_REQUEST)
+
+                .body(
+
+                        Map.of(
+
+                                "timestamp", LocalDateTime.now(),
+
+                                "message", ex.getMessage()
+
+                        )
+
+                );
+
+    }
+
+    @ExceptionHandler(InvalidRestockQuantityException.class)
+    public ResponseEntity<?> handleInvalidRestockQuantity(
+            InvalidRestockQuantityException ex
+    ) {
+
+        return ResponseEntity
+
+                .status(HttpStatus.BAD_REQUEST)
+
+                .body(
+
+                        Map.of(
+
+                                "timestamp", LocalDateTime.now(),
+
+                                "message", ex.getMessage()
+
+                        )
+
+                );
+
+    }
+
 }
