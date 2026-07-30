@@ -163,4 +163,13 @@ public class VehicleController {
 
     }
 
+    /**
+     * Deletes a vehicle.
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteVehicle(@PathVariable Long id){
+        vehicleService.deleteVehicle(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

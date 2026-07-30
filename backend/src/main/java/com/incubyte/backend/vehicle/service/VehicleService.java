@@ -160,6 +160,30 @@ public class VehicleService {
 
 
     /**
+     * Deletes a vehicle from inventory.
+     */
+    public void deleteVehicle(Long id) {
+
+        Vehicle vehicle = vehicleRepository
+
+                .findById(id)
+
+                .orElseThrow(
+
+                        () -> new VehicleNotFoundException(
+
+                                "Vehicle not found"
+
+                        )
+
+                );
+
+        vehicleRepository.delete(vehicle);
+
+    }
+
+
+    /**
      * Search by make.
      */
     public List<VehicleResponse> searchByMake(String make) {
