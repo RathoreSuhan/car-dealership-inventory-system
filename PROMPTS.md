@@ -543,3 +543,28 @@ Ensure the security test suite passes cleanly without polluting the local databa
 - Isolated test database operations by configuring an in-memory H2 database under `src/test/resources/application.properties`.
 - Added `@Transactional` support to test classes to ensure rollback after each test execution.
 - Resolved configuration conflicts by separating local development settings from the test environment.
+
+
+---
+
+# ============================================================
+#                     FRONTEND DEVELOPMENT
+# ============================================================
+
+---
+
+
+## Phase 1 - React + Vite Setup
+
+Completed:
+- Created React project using Vite
+- Installed project dependencies
+- Verified development server
+- Removed default Vite starter content
+- Simplified App.jsx to a clean starting point
+
+Status:
+✅ Complete
+
+Commit:
+chore(frontend): initialize React application with Vite
