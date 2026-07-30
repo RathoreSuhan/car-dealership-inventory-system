@@ -331,3 +331,20 @@ Implement the vehicle update workflow with proper TDD and domain-driven exceptio
 - Added the update REST endpoint.
 - Replaced a generic RuntimeException with a VehicleNotFoundException during the refactor phase.
 - Preserved clean separation between controller, service, repository, DTO, and mapper layers.
+
+## Prompt
+
+How should I implement the vehicle purchase feature while following Red-Green-Refactor TDD and SOLID principles?
+
+## AI Assistance Summary
+
+### Goal
+
+Implement the purchase workflow while ensuring inventory cannot become negative.
+
+### Guidance Received
+
+- Added a failing unit test before implementation.
+- Implemented purchase logic by decreasing stock by one.
+- Exposed the purchase endpoint through the controller.
+- Refactored the service by introducing an OutOfStockException to enforce inventory constraints.

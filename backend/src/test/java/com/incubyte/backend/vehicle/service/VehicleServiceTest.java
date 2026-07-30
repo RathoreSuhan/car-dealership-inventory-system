@@ -142,4 +142,50 @@ class VehicleServiceTest {
                 .save(vehicle);
 
     }
+
+    @Test
+    void shouldRestockVehicleSuccessfully() {
+
+        // Arrange
+
+        VehicleRepository repository =
+                mock(VehicleRepository.class);
+
+        VehicleService service =
+                new VehicleService(repository);
+
+        Vehicle vehicle = Vehicle.builder()
+                .id(1L)
+                .make("Toyota")
+                .model("Legender")
+                .category("SUV")
+                .price(4500000.0)
+                .quantity(5)
+                .build();
+
+        when(repository.findById(1L))
+                .thenReturn(Optional.of(vehicle));
+
+        when(repository.save(any(Vehicle.class)))
+                .thenAnswer(invocation -> invocation.getArgument(0));
+
+        // Act
+
+        VehicleResponse response =
+                service.restockVehicle(
+                        1L,
+                        10
+                );
+
+        // Assert
+
+        assertEquals(
+                15,
+                response.getQuantity()
+        );
+
+        verify(repository)
+                .save(vehicle);
+
+    }
 }
