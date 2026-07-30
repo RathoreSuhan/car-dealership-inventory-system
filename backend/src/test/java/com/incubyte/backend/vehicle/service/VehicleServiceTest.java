@@ -188,4 +188,43 @@ class VehicleServiceTest {
                 .save(vehicle);
 
     }
+
+
+    @Test
+    void shouldDeleteVehicleSuccessfully() {
+
+        // Arrange
+
+        VehicleRepository repository =
+                mock(VehicleRepository.class);
+
+        VehicleService service =
+                new VehicleService(repository);
+
+        Vehicle vehicle = Vehicle.builder()
+
+                .id(1L)
+                .make("Toyota")
+                .model("Legender")
+                .category("SUV")
+                .price(4500000.0)
+                .quantity(5)
+
+                .build();
+
+        when(repository.findById(1L))
+
+                .thenReturn(Optional.of(vehicle));
+
+        // Act
+
+        service.deleteVehicle(1L);
+
+        // Assert
+
+        verify(repository)
+
+                .delete(vehicle);
+
+    }
 }
