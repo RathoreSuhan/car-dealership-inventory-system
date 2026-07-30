@@ -25,8 +25,7 @@ public class VehicleService {
      */
     public VehicleResponse addVehicle(CreateVehicleRequest request) {
 
-        Vehicle vehicle =
-                VehicleMapper.toEntity(request);
+        Vehicle vehicle = VehicleMapper.toEntity(request);
 
         vehicle = vehicleRepository.save(vehicle);
 
@@ -43,15 +42,7 @@ public class VehicleService {
     ) {
 
         // Fetch vehicle from database.
-        Vehicle vehicle = vehicleRepository
-
-                .findById(id)
-
-                .orElseThrow(() ->
-                        new VehicleNotFoundException(
-                                "Vehicle not found"
-                        )
-                );
+        Vehicle vehicle = getVehicleById(id);
 
         // Update all editable fields.
         vehicle.setMake(request.getMake());
@@ -72,19 +63,7 @@ public class VehicleService {
      */
     public VehicleResponse purchaseVehicle(Long id) {
 
-        Vehicle vehicle = vehicleRepository
-
-                .findById(id)
-
-                .orElseThrow(
-
-                        () -> new VehicleNotFoundException(
-
-                                "Vehicle not found"
-
-                        )
-
-                );
+        Vehicle vehicle = getVehicleById(id);
 
         if (vehicle.getQuantity() <= 0) {
 
@@ -119,19 +98,7 @@ public class VehicleService {
     ) {
 
         // Fetch vehicle.
-        Vehicle vehicle = vehicleRepository
-
-                .findById(id)
-
-                .orElseThrow(
-
-                        () -> new VehicleNotFoundException(
-
-                                "Vehicle not found"
-
-                        )
-
-                );
+        Vehicle vehicle = getVehicleById(id);
 
         // Quantity must always be positive.
         if (quantity <= 0) {
@@ -164,20 +131,7 @@ public class VehicleService {
      */
     public void deleteVehicle(Long id) {
 
-        Vehicle vehicle = vehicleRepository
-
-                .findById(id)
-
-                .orElseThrow(
-
-                        () -> new VehicleNotFoundException(
-
-                                "Vehicle not found"
-
-                        )
-
-                );
-
+        Vehicle vehicle = getVehicleById(id);
         vehicleRepository.delete(vehicle);
 
     }
@@ -246,6 +200,29 @@ public class VehicleService {
                 .map(VehicleMapper::toResponse)
 
                 .toList();
+
+    }
+
+
+    /**
+     * Returns a vehicle if present,
+     * otherwise throws VehicleNotFoundException.
+     */
+    private Vehicle getVehicleById(Long id) {
+
+        return vehicleRepository
+
+                .findById(id)
+
+                .orElseThrow(
+
+                        () -> new VehicleNotFoundException(
+
+                                "Vehicle not found"
+
+                        )
+
+                );
 
     }
 

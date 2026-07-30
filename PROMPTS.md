@@ -419,3 +419,21 @@ Begin implementing role-based authorization for protected vehicle endpoints.
 - Used @WithMockUser to simulate authenticated users.
 - Wrote the first failing authorization test before changing production code.
 - Prepared the project for implementing admin-only endpoint protection.
+
+
+## Prompt
+
+How should I enforce role-based authorization for vehicle management APIs using Spring Security while following the Green phase of TDD?
+
+## AI Assistance Summary
+
+### Goal
+
+Implement role-based access control for vehicle management endpoints.
+
+### Guidance Received
+
+- Updated SecurityConfig to define role-specific authorization rules.
+- Restricted create, update, delete, and restock endpoints to ADMIN users.
+- Allowed authenticated users to browse, search, and purchase vehicles.
+- Verified the implementation with integration tests for both USER and ADMIN roles.
