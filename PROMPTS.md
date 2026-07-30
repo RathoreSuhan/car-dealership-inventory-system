@@ -293,3 +293,22 @@ Start the Vehicle module by defining the domain model and creating the first fai
 - Added a mapper to isolate object conversion.
 - Wrote the first failing unit test for vehicle creation before implementing the service.
 - Continued following the Red-Green-Refactor workflow.
+
+
+## Prompt
+
+How should I implement the Vehicle module in a Spring Boot REST API while continuing to follow SOLID principles and practical TDD?
+
+## AI Assistance Summary
+
+### Goal
+
+Implement the core Vehicle management functionality required by the project.
+
+### Guidance Received
+
+- Implemented the Vehicle service and controller.
+- Added APIs to create and list vehicles.
+- Added search functionality by make, model, and category.
+- Protected vehicle APIs with JWT authentication.
+- Continued using DTOs, mappers, and repository abstractions to keep the design clean.

@@ -1,5 +1,6 @@
 package com.incubyte.backend.vehicle.service;
 
+import com.incubyte.backend.exception.VehicleNotFoundException;
 import com.incubyte.backend.vehicle.dto.CreateVehicleRequest;
 import com.incubyte.backend.vehicle.dto.VehicleResponse;
 import com.incubyte.backend.vehicle.entity.Vehicle;
@@ -44,7 +45,11 @@ public class VehicleService {
 
                 .findById(id)
 
-                .orElseThrow(() -> new RuntimeException("Vehicle not found"));
+                .orElseThrow(() ->
+                        new VehicleNotFoundException(
+                                "Vehicle not found"
+                        )
+                );
 
         // Update all editable fields.
         vehicle.setMake(request.getMake());
