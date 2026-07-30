@@ -52,4 +52,43 @@ class VehicleControllerSecurityTest {
                 );
 
     }
+
+
+    @Test
+    @WithMockUser(
+            username = "admin@gmail.com",
+            roles = "ADMIN"
+    )
+    void shouldAllowVehicleCreationForAdmin()
+            throws Exception {
+
+        String request = """
+            {
+                "make":"Toyota",
+                "model":"Fortuner",
+                "category":"SUV",
+                "price":4200000,
+                "quantity":5
+            }
+            """;
+
+        mockMvc.perform(
+
+                        post("/api/vehicles")
+
+                                .contentType(
+                                        MediaType.APPLICATION_JSON
+                                )
+
+                                .content(request)
+
+                )
+
+                .andExpect(
+
+                        status().isCreated()
+
+                );
+
+    }
 }

@@ -4,6 +4,7 @@ import com.incubyte.backend.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -48,18 +49,59 @@ public class SecurityConfig {
                 // Authorization rules.
                 .authorizeHttpRequests(auth -> auth
 
-                        // Public endpoints.
-                        .requestMatchers("/api/auth/**")
+                        // Public APIs
+                        .requestMatchers(
+                                "/api/auth/**"
+                        )
                         .permitAll()
 
-                        .requestMatchers("/api/vehicles")
+                        // -----------------------------
+                        // ADMIN ONLY
+                        // -----------------------------
+
+                        .requestMatchers(
+                                HttpMethod.POST,
+                                "/api/vehicles"
+                        )
+                        .hasRole("ADMIN")
+
+                        .requestMatchers(
+                                HttpMethod.PUT,
+                                "/api/vehicles/**"
+                        )
+                        .hasRole("ADMIN")
+
+                        .requestMatchers(
+                                HttpMethod.DELETE,
+                                "/api/vehicles/**"
+                        )
+                        .hasRole("ADMIN")
+
+                        .requestMatchers(
+                                HttpMethod.POST,
+                                "/api/vehicles/*/restock"
+                        )
+                        .hasRole("ADMIN")
+
+                        // -----------------------------
+                        // AUTHENTICATED USERS
+                        // -----------------------------
+
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/api/vehicles/**"
+                        )
                         .authenticated()
 
-                        .requestMatchers("/api/vehicles/**")
+                        .requestMatchers(
+                                HttpMethod.POST,
+                                "/api/vehicles/*/purchase"
+                        )
                         .authenticated()
 
-                        // Everything else requires authentication.
-                        .anyRequest().authenticated()
+                        // Everything else
+                        .anyRequest()
+                        .authenticated()
 
                 )
 

@@ -401,3 +401,21 @@ Improve test readability and maintainability without changing application behavi
 - Added @BeforeEach for centralized Mockito initialization.
 - Extracted reusable helper methods for test data creation.
 - Removed duplicated setup code while preserving all existing test behavior.
+
+
+## Prompt
+
+How can I implement role-based authorization using Spring Security while continuing to follow the Red-Green-Refactor TDD cycle?
+
+## AI Assistance Summary
+
+### Goal
+
+Begin implementing role-based authorization for protected vehicle endpoints.
+
+### Guidance Received
+
+- Added a security integration test using MockMvc.
+- Used @WithMockUser to simulate authenticated users.
+- Wrote the first failing authorization test before changing production code.
+- Prepared the project for implementing admin-only endpoint protection.
