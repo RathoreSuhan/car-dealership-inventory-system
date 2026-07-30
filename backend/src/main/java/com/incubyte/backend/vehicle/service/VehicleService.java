@@ -107,6 +107,45 @@ public class VehicleService {
 
     }
 
+    /**
+     * Increases available stock.
+     */
+    public VehicleResponse restockVehicle(
+
+            Long id,
+            Integer quantity
+
+    ) {
+
+        // Fetch vehicle.
+        Vehicle vehicle = vehicleRepository
+
+                .findById(id)
+
+                .orElseThrow(
+
+                        () -> new VehicleNotFoundException(
+
+                                "Vehicle not found"
+
+                        )
+
+                );
+
+        // Increase stock.
+        vehicle.setQuantity(
+
+                vehicle.getQuantity() + quantity
+
+        );
+
+        // Persist changes.
+        vehicle = vehicleRepository.save(vehicle);
+
+        return VehicleMapper.toResponse(vehicle);
+
+    }
+
 
     /**
      * Search by make.
