@@ -348,3 +348,21 @@ Implement the purchase workflow while ensuring inventory cannot become negative.
 - Implemented purchase logic by decreasing stock by one.
 - Exposed the purchase endpoint through the controller.
 - Refactored the service by introducing an OutOfStockException to enforce inventory constraints.
+
+## Prompt
+
+How should I implement the vehicle restock feature while following the Red-Green-Refactor TDD cycle and SOLID principles?
+
+## AI Assistance Summary
+
+### Goal
+
+Implement inventory restocking with proper validation and clean service-layer design.
+
+### Guidance Received
+
+- Added a failing unit test before implementing the feature.
+- Implemented restock logic by increasing the vehicle quantity.
+- Added a REST endpoint for restocking inventory.
+- Refactored the service by introducing a dedicated exception to reject invalid restock quantities.
+- Kept validation within the service layer to preserve separation of concerns.

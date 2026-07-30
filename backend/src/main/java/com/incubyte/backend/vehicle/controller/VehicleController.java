@@ -86,6 +86,29 @@ public class VehicleController {
     }
 
     /**
+     * Restocks an existing vehicle.
+     */
+    @PostMapping("/{id}/restock")
+    public ResponseEntity<VehicleResponse> restockVehicle(
+
+            @PathVariable Long id,
+
+            @RequestParam Integer quantity
+
+    ) {
+
+        return ResponseEntity.ok(
+
+                vehicleService.restockVehicle(
+                        id,
+                        quantity
+                )
+
+        );
+
+    }
+
+    /**
      * Get all vehicles.
      */
     @GetMapping

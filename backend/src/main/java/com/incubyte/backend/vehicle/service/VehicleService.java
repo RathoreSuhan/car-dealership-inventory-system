@@ -1,5 +1,6 @@
 package com.incubyte.backend.vehicle.service;
 
+import com.incubyte.backend.exception.InvalidRestockQuantityException;
 import com.incubyte.backend.exception.OutOfStockException;
 import com.incubyte.backend.exception.VehicleNotFoundException;
 import com.incubyte.backend.vehicle.dto.CreateVehicleRequest;
@@ -131,6 +132,17 @@ public class VehicleService {
                         )
 
                 );
+
+        // Quantity must always be positive.
+        if (quantity <= 0) {
+
+            throw new InvalidRestockQuantityException(
+
+                    "Restock quantity must be greater than zero"
+
+            );
+
+        }
 
         // Increase stock.
         vehicle.setQuantity(
