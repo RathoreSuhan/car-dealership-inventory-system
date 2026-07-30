@@ -437,3 +437,91 @@ Implement role-based access control for vehicle management endpoints.
 - Restricted create, update, delete, and restock endpoints to ADMIN users.
 - Allowed authenticated users to browse, search, and purchase vehicles.
 - Verified the implementation with integration tests for both USER and ADMIN roles.
+
+## Prompt
+
+Refactor the VehicleService to remove duplicated repository lookup logic while preserving behavior and following SOLID principles.
+
+## AI Assistance Summary
+
+### Goal
+
+Improve maintainability by eliminating repeated vehicle lookup code.
+
+### Guidance Received
+
+- Extracted a private helper method for fetching a vehicle by ID.
+- Replaced duplicated lookup code in update, purchase, restock, and delete operations.
+- Preserved existing behavior while improving readability and reducing duplication.
+
+
+
+## Prompt
+
+How should I implement a unified vehicle search endpoint using Test-Driven Development while following SOLID principles?
+
+## AI Assistance Summary
+
+### Goal
+
+Introduce a single search endpoint capable of filtering vehicles by make, model, category, and price range.
+
+### Guidance Received
+
+- Started with a failing repository test.
+- Planned to implement the search using JPQL with optional parameters.
+- Chose a single endpoint instead of multiple dedicated search endpoints.
+- Followed the RED phase before modifying production code.
+
+
+## Prompt
+
+Implement a unified vehicle search endpoint using JPQL while following the Green phase of Test-Driven Development.
+
+## AI Assistance Summary
+
+### Goal
+
+Implement a single vehicle search endpoint supporting optional filters.
+
+### Guidance Received
+
+- Added a JPQL query with optional parameters.
+- Introduced a unified service method for searching vehicles.
+- Exposed a single REST endpoint for searching by make, model, category, and price range.
+- Verified the implementation by running the complete test suite successfully.
+
+
+## Prompt
+
+Refactor the unified vehicle search API to improve maintainability while preserving existing behavior.
+
+## AI Assistance Summary
+
+### Goal
+
+Improve the controller design by encapsulating search filters.
+
+### Guidance Received
+
+- Introduced a dedicated VehicleSearchRequest DTO.
+- Replaced multiple request parameters with a single model attribute.
+- Preserved the REST API contract while improving readability and maintainability.
+
+
+## Prompt
+
+Create integration tests for the vehicle REST APIs using MockMvc and Spring Boot Test while preserving the layered architecture.
+
+## AI Assistance Summary
+
+### Goal
+
+Verify the complete request lifecycle from controller to database.
+
+### Guidance Received
+
+- Used SpringBootTest with MockMvc.
+- Tested HTTP endpoints instead of individual methods.
+- Validated request mapping, persistence, and response status.
+- Complemented existing unit tests with integration tests.
