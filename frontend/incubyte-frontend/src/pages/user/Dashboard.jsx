@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"; // React hooks
 import toast from "react-hot-toast"; // Notification messages
-
+import SearchBar from "../../components/vehicle/SearchBar";
 import { getVehicles, purchaseVehicle } from "../../services/vehicleService";
 
 import VehicleCard from "../../components/vehicle/VehicleCard";
@@ -23,9 +23,9 @@ export default function Dashboard() {
 
         try {
 
-            const data = await getVehicles(); // API call
+            const response = await getVehicles(); // AxiosResponse object
 
-            setVehicles(data); // Store vehicles
+            setVehicles(response.data); // Actual vehicle array
 
         }
 
@@ -38,6 +38,32 @@ export default function Dashboard() {
         finally {
 
             setLoading(false); // Hide loading
+
+        }
+
+    };
+
+        /*
+    * Search vehicles using filters.
+    */
+    const handleSearch = async (filters) => {
+
+        try {
+
+            // Import search API only when needed
+            const { searchVehicles } = await import("../../services/vehicleService");
+
+            // Backend returns AxiosResponse
+            const response = await searchVehicles(filters);
+
+            // Save filtered list
+            setVehicles(response.data);
+
+        }
+
+        catch (error) {
+
+            toast.error("Search failed.");
 
         }
 
@@ -101,6 +127,7 @@ export default function Dashboard() {
 
             </h1>
 
+            <SearchBar onSearch={handleSearch}/>
             {
 
                 vehicles.length === 0 ? (

@@ -583,3 +583,22 @@ Build a reusable authentication layer for the React application that works with 
 - Implemented a `PrivateRoute` component to protect authenticated pages.
 - Configured Axios to automatically attach the JWT in the `Authorization` header for every protected API request.
 - Redirected users appropriately after successful login and registration.
+
+
+## Prompt
+
+Build the initial React dashboard for the car dealership inventory system by integrating the existing Spring Boot vehicle APIs. Create reusable UI components, display vehicles in a responsive grid, support vehicle purchases, and include loading and error handling states.
+
+## AI Assistance Summary
+
+### Goal
+
+Develop the first functional dashboard that consumes backend APIs and displays the vehicle inventory in a clean, reusable React architecture.
+
+### Guidance Received
+
+- Created reusable `Navbar` and `VehicleCard` components.
+- Added a `Dashboard` page that fetches vehicles using Axios.
+- Integrated the purchase API and refreshed inventory after successful purchases.
+- Added loading indicators and toast notifications for better user feedback.
+- Updated the vehicle service to return API payloads directly for simpler component logic.

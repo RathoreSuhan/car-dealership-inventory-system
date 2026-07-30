@@ -1,20 +1,24 @@
+import { Routes, Route } from "react-router-dom"; // React Router
+
 import Navbar from "./components/layout/Navbar";
 
 import Dashboard from "./pages/user/Dashboard";
+import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
 
-function App() {
+export default function App() {
 
     return (
 
         <>
 
-            {/* Visible on every page */}
+            {/* Top navigation bar */}
 
             <Navbar />
 
             <Routes>
 
-                {/* Home page */}
+                {/* Home */}
 
                 <Route
 
@@ -24,7 +28,17 @@ function App() {
 
                 />
 
-                {/* Existing routes */}
+                {/* Dashboard */}
+
+                <Route
+
+                    path="/dashboard"
+
+                    element={<Dashboard />}
+
+                />
+
+                {/* Login */}
 
                 <Route
 
@@ -33,6 +47,8 @@ function App() {
                     element={<Login />}
 
                 />
+
+                {/* Register */}
 
                 <Route
 
@@ -49,5 +65,3 @@ function App() {
     );
 
 }
-
-export default App;
