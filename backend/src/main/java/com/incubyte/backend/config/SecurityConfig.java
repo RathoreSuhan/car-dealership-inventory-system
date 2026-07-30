@@ -34,6 +34,7 @@ public class SecurityConfig {
     ) throws Exception {
 
         http
+                .cors(cors -> {})
 
                 // Disable CSRF for REST APIs.
                 .csrf(csrf -> csrf.disable())

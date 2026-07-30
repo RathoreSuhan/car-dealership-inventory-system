@@ -7,6 +7,8 @@ import {
 
     getVehicles,
 
+    updateVehicle,
+
 } from "../../services/vehicleService";
 
 import VehicleForm from "../../components/vehicle/VehicleForm";
@@ -17,25 +19,32 @@ import VehicleTable from "../../components/vehicle/VehicleTable";
  *
  * Handles:
  * 1. Add Vehicle
- * 2. Display Vehicles
+ * 2. Update Vehicle
+ * 3. Display Vehicles
  */
 export default function AdminDashboard() {
 
-    // Stores all vehicles from backend
+    // Stores all vehicles
 
     const [vehicles, setVehicles] = useState([]);
 
     /*
-     * Load all vehicles from backend.
+     * Vehicle currently being edited.
+     *
+     * null  -> Add mode
+     * object -> Edit mode
+     */
+    const [editingVehicle, setEditingVehicle] = useState(null);
+
+    /*
+     * Load all vehicles.
      */
     const loadVehicles = async () => {
 
         try {
 
-            // Axios returns full response object
             const response = await getVehicles();
 
-            // Store actual vehicle array
             setVehicles(response.data);
 
         }
@@ -49,18 +58,16 @@ export default function AdminDashboard() {
     };
 
     /*
-     * Add a new vehicle.
+     * Add new vehicle.
      */
     const handleAddVehicle = async (data) => {
 
         try {
 
-            // Create vehicle
             await addVehicle(data);
 
             toast.success("Vehicle added successfully.");
 
-            // Refresh vehicle list
             loadVehicles();
 
         }
@@ -80,16 +87,75 @@ export default function AdminDashboard() {
     };
 
     /*
-     * Placeholder for edit feature.
+     * Update existing vehicle.
      */
-    const handleEditVehicle = (vehicle) => {
+    const handleUpdateVehicle = async (data) => {
 
-        console.log("Edit :", vehicle);
+        try {
+
+            await updateVehicle(
+
+                editingVehicle.id,
+
+                data
+
+            );
+
+            toast.success("Vehicle updated successfully.");
+
+            /*
+             * Exit edit mode.
+             */
+            setEditingVehicle(null);
+
+            /*
+             * Refresh latest data.
+             */
+            loadVehicles();
+
+        }
+
+        catch (error) {
+
+            toast.error(
+
+                error.response?.data?.message ||
+
+                "Unable to update vehicle."
+
+            );
+
+        }
 
     };
 
     /*
-     * Placeholder for delete feature.
+     * Edit button clicked.
+     *
+     * Load selected vehicle
+     * into form.
+     */
+    const handleEditVehicle = (vehicle) => {
+
+        setEditingVehicle(vehicle);
+
+        /*
+         * Scroll to form
+         * for better UX.
+         */
+        window.scrollTo({
+
+            top: 0,
+
+            behavior: "smooth",
+
+        });
+
+    };
+
+    /*
+     * Placeholder
+     * Delete feature.
      */
     const handleDeleteVehicle = (id) => {
 
@@ -98,7 +164,8 @@ export default function AdminDashboard() {
     };
 
     /*
-     * Placeholder for restock feature.
+     * Placeholder
+     * Restock feature.
      */
     const handleRestockVehicle = (vehicle) => {
 
@@ -107,7 +174,7 @@ export default function AdminDashboard() {
     };
 
     /*
-     * Load vehicles once page opens.
+     * Load vehicles once.
      */
     useEffect(() => {
 
@@ -129,9 +196,34 @@ export default function AdminDashboard() {
 
             <VehicleForm
 
-                onSubmit={handleAddVehicle}
+                /*
+                 * When null,
+                 * Add mode.
+                 *
+                 * Otherwise
+                 * Update mode.
+                 */
+                initialValues={editingVehicle}
 
-                buttonText="Add Vehicle"
+                onSubmit={
+
+                    editingVehicle
+
+                        ? handleUpdateVehicle
+
+                        : handleAddVehicle
+
+                }
+
+                buttonText={
+
+                    editingVehicle
+
+                        ? "Update Vehicle"
+
+                        : "Add Vehicle"
+
+                }
 
             />
 

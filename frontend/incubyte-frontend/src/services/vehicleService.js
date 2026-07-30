@@ -16,6 +16,9 @@ export const searchVehicles = (params) =>
 export const addVehicle = (data) =>
     axiosInstance.post("/vehicles", data);
 
+/*
+ * Update existing vehicle.
+ */
 export const updateVehicle = (id, data) =>
     axiosInstance.put(`/vehicles/${id}`, data);
 
@@ -33,3 +36,4 @@ export const restockVehicle = (id, quantity) =>
             params: { quantity },
         }
     );
+
