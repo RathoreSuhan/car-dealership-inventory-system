@@ -656,3 +656,21 @@ Implement a reusable form component that can be shared between vehicle creation 
 - Mirrored Spring Boot validation constraints (`@NotBlank`, `@Positive`, `@PositiveOrZero`) on the frontend.
 - Built the initial `AdminDashboard` page using the reusable form.
 - Connected the form to the existing `addVehicle` service without changing the backend API.
+
+
+## Prompt
+
+Build a reusable vehicle table for the admin dashboard to display inventory and prepare it for CRUD operations.
+
+## AI Assistance Summary
+
+### Goal
+
+Create a reusable table component that displays vehicle inventory and exposes action callbacks for edit, delete, and restock.
+
+### Guidance Received
+
+- Built a reusable `VehicleTable` component for inventory display.
+- Added configurable callbacks for edit, delete, and restock actions.
+- Kept the component presentation-focused while delegating business logic to the admin page.
+- Structured the table for easy integration with existing Spring Boot CRUD APIs.
