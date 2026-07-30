@@ -2,6 +2,7 @@ package com.incubyte.backend.vehicle.controller;
 
 import com.incubyte.backend.vehicle.dto.CreateVehicleRequest;
 import com.incubyte.backend.vehicle.dto.VehicleResponse;
+import com.incubyte.backend.vehicle.dto.VehicleSearchRequest;
 import com.incubyte.backend.vehicle.service.VehicleService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -128,20 +129,8 @@ public class VehicleController {
     @GetMapping("/search")
     public ResponseEntity<List<VehicleResponse>> searchVehicles(
 
-            @RequestParam(required = false)
-            String make,
-
-            @RequestParam(required = false)
-            String model,
-
-            @RequestParam(required = false)
-            String category,
-
-            @RequestParam(required = false)
-            Double minPrice,
-
-            @RequestParam(required = false)
-            Double maxPrice
+            @ModelAttribute
+            VehicleSearchRequest request
 
     ) {
 
@@ -149,15 +138,15 @@ public class VehicleController {
 
                 vehicleService.searchVehicles(
 
-                        make,
+                        request.getMake(),
 
-                        model,
+                        request.getModel(),
 
-                        category,
+                        request.getCategory(),
 
-                        minPrice,
+                        request.getMinPrice(),
 
-                        maxPrice
+                        request.getMaxPrice()
 
                 )
 
