@@ -674,3 +674,21 @@ Create a reusable table component that displays vehicle inventory and exposes ac
 - Added configurable callbacks for edit, delete, and restock actions.
 - Kept the component presentation-focused while delegating business logic to the admin page.
 - Structured the table for easy integration with existing Spring Boot CRUD APIs.
+
+
+## Prompt
+
+Integrate the admin dashboard with the backend vehicle APIs to display inventory and refresh it after vehicle creation.
+
+## AI Assistance Summary
+
+### Goal
+
+Create a functional admin dashboard that loads vehicles from the backend and updates the inventory after adding a new vehicle.
+
+### Guidance Received
+
+- Connected the admin dashboard to the existing `getVehicles` and `addVehicle` service methods.
+- Added a reusable inventory table to display backend data.
+- Refreshed the vehicle list automatically after successful vehicle creation.
+- Added placeholders for edit, delete, and restock operations to prepare the remaining CRUD features.

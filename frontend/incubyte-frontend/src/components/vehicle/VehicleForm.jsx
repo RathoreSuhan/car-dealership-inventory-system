@@ -2,21 +2,22 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 /*
- * Reusable form used for both
- * Add Vehicle and Update Vehicle.
+ * Reusable form for
+ * Add Vehicle
+ * Update Vehicle
  */
 export default function VehicleForm({
 
-    initialValues,   // Existing vehicle (edit mode)
+    initialValues,
 
-    onSubmit,        // Parent callback
+    onSubmit,
 
-    buttonText,      // Button label
+    buttonText,
 
 }) {
 
     /*
-     * React Hook Form setup
+     * React Hook Form
      */
     const {
 
@@ -47,7 +48,8 @@ export default function VehicleForm({
     });
 
     /*
-     * Populate form when editing.
+     * Whenever edit mode starts,
+     * populate form.
      */
     useEffect(() => {
 
@@ -57,19 +59,64 @@ export default function VehicleForm({
 
         }
 
-    }, [initialValues, reset]);
+        else {
+
+            reset({
+
+                make: "",
+
+                model: "",
+
+                category: "",
+
+                price: "",
+
+                quantity: 0,
+
+            });
+
+        }
+
+    }, [
+
+        initialValues,
+
+        reset,
+
+    ]);
+
+    /*
+     * Submit form
+     */
+    const submitForm = (data) => {
+
+        onSubmit(data);
+
+        /*
+         * Clear form only while adding.
+         *
+         * During update we wait for parent
+         * component to reset edit mode.
+         */
+        if (!initialValues) {
+
+            reset();
+
+        }
+
+    };
 
     return (
 
         <form
 
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={handleSubmit(submitForm)}
 
             className="space-y-4 bg-white shadow rounded-lg p-6"
 
         >
 
-            {/* Vehicle Make */}
+            {/* Make */}
 
             <div>
 
@@ -81,17 +128,11 @@ export default function VehicleForm({
 
                     className="border w-full rounded p-2"
 
-                    {...register(
+                    {...register("make", {
 
-                        "make",
+                        required: "Make is required",
 
-                        {
-
-                            required: "Make is required",
-
-                        }
-
-                    )}
+                    })}
 
                 />
 
@@ -103,7 +144,7 @@ export default function VehicleForm({
 
             </div>
 
-            {/* Vehicle Model */}
+            {/* Model */}
 
             <div>
 
@@ -115,17 +156,11 @@ export default function VehicleForm({
 
                     className="border w-full rounded p-2"
 
-                    {...register(
+                    {...register("model", {
 
-                        "model",
+                        required: "Model is required",
 
-                        {
-
-                            required: "Model is required",
-
-                        }
-
-                    )}
+                    })}
 
                 />
 
@@ -137,7 +172,7 @@ export default function VehicleForm({
 
             </div>
 
-            {/* Vehicle Category */}
+            {/* Category */}
 
             <div>
 
@@ -149,17 +184,11 @@ export default function VehicleForm({
 
                     className="border w-full rounded p-2"
 
-                    {...register(
+                    {...register("category", {
 
-                        "category",
+                        required: "Category is required",
 
-                        {
-
-                            required: "Category is required",
-
-                        }
-
-                    )}
+                    })}
 
                 />
 
@@ -171,7 +200,7 @@ export default function VehicleForm({
 
             </div>
 
-            {/* Vehicle Price */}
+            {/* Price */}
 
             <div>
 
@@ -185,27 +214,21 @@ export default function VehicleForm({
 
                     className="border w-full rounded p-2"
 
-                    {...register(
+                    {...register("price", {
 
-                        "price",
+                        required: "Price is required",
 
-                        {
+                        min: {
 
-                            required: "Price is required",
+                            value: 1,
 
-                            min: {
+                            message: "Price must be greater than 0",
 
-                                value: 1,
+                        },
 
-                                message: "Price must be greater than 0",
+                        valueAsNumber: true,
 
-                            },
-
-                            valueAsNumber: true, // Convert string -> number
-
-                        }
-
-                    )}
+                    })}
 
                 />
 
@@ -217,7 +240,7 @@ export default function VehicleForm({
 
             </div>
 
-            {/* Vehicle Quantity */}
+            {/* Quantity */}
 
             <div>
 
@@ -229,27 +252,21 @@ export default function VehicleForm({
 
                     className="border w-full rounded p-2"
 
-                    {...register(
+                    {...register("quantity", {
 
-                        "quantity",
+                        required: "Quantity is required",
 
-                        {
+                        min: {
 
-                            required: "Quantity is required",
+                            value: 0,
 
-                            min: {
+                            message: "Quantity cannot be negative",
 
-                                value: 0,
+                        },
 
-                                message: "Quantity cannot be negative",
+                        valueAsNumber: true,
 
-                            },
-
-                            valueAsNumber: true,
-
-                        }
-
-                    )}
+                    })}
 
                 />
 
@@ -260,8 +277,6 @@ export default function VehicleForm({
                 </p>
 
             </div>
-
-            {/* Submit button */}
 
             <button
 
