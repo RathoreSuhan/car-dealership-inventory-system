@@ -1,7 +1,27 @@
-import axiosInstance from "../api/axios";
+import api from "../api/axios"; // configured axios instance
 
-export const login = (data) =>
-    axiosInstance.post("/auth/login", data);
 
-export const register = (data) =>
-    axiosInstance.post("/auth/register", data);
+// Register API
+export const registerUser = async (userData) => {
+
+    const response = await api.post(
+        "/auth/register",
+        userData
+    );
+
+    return response.data;
+
+};
+
+
+// Login API
+export const loginUser = async (credentials) => {
+
+    const response = await api.post(
+        "/auth/login",
+        credentials
+    );
+
+    return response.data;
+
+};

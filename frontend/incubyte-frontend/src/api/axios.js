@@ -10,15 +10,24 @@ const axiosInstance = axios.create({
 /*
  * Automatically attaches JWT before every request.
  */
-axiosInstance.interceptors.request.use((config) => {
+axiosInstance.interceptors.request.use(
 
-    const token = localStorage.getItem("token");
+    (config) => {
 
-    if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-    }
+        const token = localStorage.getItem("token"); // Read JWT from browser
 
-    return config;
-});
+        if (token) {
+
+            config.headers.Authorization = `Bearer ${token}`; // Attach JWT
+
+        }
+
+        return config;
+
+    },
+
+    (error) => Promise.reject(error) // Forward request errors
+
+);
 
 export default axiosInstance;
