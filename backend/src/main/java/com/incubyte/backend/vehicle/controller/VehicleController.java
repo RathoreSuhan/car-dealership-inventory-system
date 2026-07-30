@@ -122,42 +122,44 @@ public class VehicleController {
 
     }
 
-    @GetMapping("/search/make")
-    public ResponseEntity<List<VehicleResponse>> searchByMake(
+    /**
+     * Search vehicles using optional filters.
+     */
+    @GetMapping("/search")
+    public ResponseEntity<List<VehicleResponse>> searchVehicles(
 
-            @RequestParam String make
+            @RequestParam(required = false)
+            String make,
 
-    ) {
+            @RequestParam(required = false)
+            String model,
 
-        return ResponseEntity.ok(
+            @RequestParam(required = false)
+            String category,
 
-                vehicleService.searchByMake(make)
+            @RequestParam(required = false)
+            Double minPrice,
 
-        );
-
-    }
-
-    @GetMapping("/search/model")
-    public ResponseEntity<List<VehicleResponse>> searchByModel(
-            @RequestParam String model
-    ) {
-
-        return ResponseEntity.ok(
-                vehicleService.searchByModel(model)
-        );
-
-    }
-
-    @GetMapping("/search/category")
-    public ResponseEntity<List<VehicleResponse>> searchByCategory(
-
-            @RequestParam String category
+            @RequestParam(required = false)
+            Double maxPrice
 
     ) {
 
         return ResponseEntity.ok(
 
-                vehicleService.searchByCategory(category)
+                vehicleService.searchVehicles(
+
+                        make,
+
+                        model,
+
+                        category,
+
+                        minPrice,
+
+                        maxPrice
+
+                )
 
         );
 

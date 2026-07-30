@@ -136,49 +136,38 @@ public class VehicleService {
 
     }
 
-
     /**
-     * Search by make.
+     * Search vehicles using optional filters.
      */
-    public List<VehicleResponse> searchByMake(String make) {
+    public List<VehicleResponse> searchVehicles(
+
+            String make,
+
+            String model,
+
+            String category,
+
+            Double minPrice,
+
+            Double maxPrice
+
+    ) {
 
         return vehicleRepository
 
-                .findByMakeContainingIgnoreCase(make)
+                .searchVehicles(
 
-                .stream()
+                        make,
 
-                .map(VehicleMapper::toResponse)
+                        model,
 
-                .toList();
+                        category,
 
-    }
+                        minPrice,
 
-    /**
-     * Search by model.
-     */
-    public List<VehicleResponse> searchByModel(String model) {
+                        maxPrice
 
-        return vehicleRepository
-
-                .findByModelContainingIgnoreCase(model)
-
-                .stream()
-
-                .map(VehicleMapper::toResponse)
-
-                .toList();
-
-    }
-
-    /**
-     * Search by category.
-     */
-    public List<VehicleResponse> searchByCategory(String category){
-
-        return vehicleRepository
-
-                .findByCategoryContainingIgnoreCase(category)
+                )
 
                 .stream()
 
