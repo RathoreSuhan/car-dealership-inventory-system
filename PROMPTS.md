@@ -525,3 +525,21 @@ Verify the complete request lifecycle from controller to database.
 - Tested HTTP endpoints instead of individual methods.
 - Validated request mapping, persistence, and response status.
 - Complemented existing unit tests with integration tests.
+
+
+## Prompt
+
+Fix test suite failures in `VehicleControllerSecurityTest` caused by security role misconfigurations, duplicate records during test execution, and unauthenticated status code mismatches.
+
+## AI Assistance Summary
+
+### Goal
+
+Ensure the security test suite passes cleanly without polluting the local database or producing duplicate entries.
+
+### Guidance Received
+
+- Updated test expectations to match security policy changes for vehicle creation endpoints.
+- Isolated test database operations by configuring an in-memory H2 database under `src/test/resources/application.properties`.
+- Added `@Transactional` support to test classes to ensure rollback after each test execution.
+- Resolved configuration conflicts by separating local development settings from the test environment.

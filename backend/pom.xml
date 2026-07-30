@@ -83,7 +83,7 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- In-Memory H2 Database for DataJpaTest -->
+		<!-- In-Memory H2 Database for Integration and Repository Tests -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>

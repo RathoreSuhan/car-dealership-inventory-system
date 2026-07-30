@@ -2,6 +2,7 @@ package com.incubyte.backend.vehicle.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.incubyte.backend.vehicle.dto.CreateVehicleRequest;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -14,6 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@Transactional
 class VehicleControllerIntegrationTest {
 
     @Autowired
