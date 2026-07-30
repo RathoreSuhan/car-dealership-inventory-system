@@ -2,13 +2,10 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 import {
-
     addVehicle,
-
+    deleteVehicle,
     getVehicles,
-
     updateVehicle,
-
 } from "../../services/vehicleService";
 
 import VehicleForm from "../../components/vehicle/VehicleForm";
@@ -21,18 +18,22 @@ import VehicleTable from "../../components/vehicle/VehicleTable";
  * 1. Add Vehicle
  * 2. Update Vehicle
  * 3. Display Vehicles
+ *
+ * Co-Author:
+ * OpenAI ChatGPT
  */
 export default function AdminDashboard() {
 
-    // Stores all vehicles
-
+    /*
+     * Stores all vehicles.
+     */
     const [vehicles, setVehicles] = useState([]);
 
     /*
-     * Vehicle currently being edited.
+     * Stores currently selected vehicle.
      *
-     * null  -> Add mode
-     * object -> Edit mode
+     * null -> Add Mode
+     * object -> Edit Mode
      */
     const [editingVehicle, setEditingVehicle] = useState(null);
 
@@ -43,13 +44,13 @@ export default function AdminDashboard() {
 
         try {
 
-            const response = await getVehicles();
+            const data = await getVehicles();
 
-            setVehicles(response.data);
+            setVehicles(data);
 
         }
 
-        catch (error) {
+        catch {
 
             toast.error("Unable to load vehicles.");
 
@@ -58,58 +59,49 @@ export default function AdminDashboard() {
     };
 
     /*
-     * Add new vehicle.
+     * Handles both
+     * Add Vehicle
+     * Update Vehicle
      */
-    const handleAddVehicle = async (data) => {
+    const handleSubmitVehicle = async (data) => {
 
         try {
-
-            await addVehicle(data);
-
-            toast.success("Vehicle added successfully.");
-
-            loadVehicles();
-
-        }
-
-        catch (error) {
-
-            toast.error(
-
-                error.response?.data?.message ||
-
-                "Unable to add vehicle."
-
-            );
-
-        }
-
-    };
-
-    /*
-     * Update existing vehicle.
-     */
-    const handleUpdateVehicle = async (data) => {
-
-        try {
-
-            await updateVehicle(
-
-                editingVehicle.id,
-
-                data
-
-            );
-
-            toast.success("Vehicle updated successfully.");
 
             /*
-             * Exit edit mode.
+             * Edit Mode
              */
-            setEditingVehicle(null);
+            if (editingVehicle) {
+
+                await updateVehicle(
+
+                    editingVehicle.id,
+
+                    data
+
+                );
+
+                toast.success("Vehicle updated successfully.");
+
+                /*
+                 * Back to Add Mode
+                 */
+                setEditingVehicle(null);
+
+            }
 
             /*
-             * Refresh latest data.
+             * Add Mode
+             */
+            else {
+
+                await addVehicle(data);
+
+                toast.success("Vehicle added successfully.");
+
+            }
+
+            /*
+             * Refresh table.
              */
             loadVehicles();
 
@@ -121,7 +113,7 @@ export default function AdminDashboard() {
 
                 error.response?.data?.message ||
 
-                "Unable to update vehicle."
+                "Operation failed."
 
             );
 
@@ -130,18 +122,16 @@ export default function AdminDashboard() {
     };
 
     /*
-     * Edit button clicked.
+     * Edit button.
      *
-     * Load selected vehicle
-     * into form.
+     * Opens form in edit mode.
      */
     const handleEditVehicle = (vehicle) => {
 
         setEditingVehicle(vehicle);
 
         /*
-         * Scroll to form
-         * for better UX.
+         * Scroll to form.
          */
         window.scrollTo({
 
@@ -153,29 +143,64 @@ export default function AdminDashboard() {
 
     };
 
-    /*
-     * Placeholder
-     * Delete feature.
-     */
-    const handleDeleteVehicle = (id) => {
 
-        console.log("Delete :", id);
+    /*
+    * Deletes a vehicle.
+    */
+    const handleDeleteVehicle = async (id) => {
+
+        const confirmed = window.confirm(
+
+            "Are you sure you want to delete this vehicle?"
+
+        );
+
+        if (!confirmed) {
+
+            return;
+
+        }
+
+        try {
+
+            await deleteVehicle(id);
+
+            toast.success(
+
+                "Vehicle deleted successfully."
+
+            );
+
+            /*
+            * Refresh table.
+            */
+            loadVehicles();
+
+        }
+
+        catch (error) {
+
+            toast.error(
+
+                error.response?.data?.message ||
+
+                "Delete failed."
+
+            );
+
+        }
 
     };
 
     /*
-     * Placeholder
-     * Restock feature.
+     * Placeholder.
      */
     const handleRestockVehicle = (vehicle) => {
 
-        console.log("Restock :", vehicle);
+        console.log(vehicle);
 
     };
 
-    /*
-     * Load vehicles once.
-     */
     useEffect(() => {
 
         loadVehicles();
@@ -192,28 +217,15 @@ export default function AdminDashboard() {
 
             </h1>
 
-            {/* Vehicle Form */}
-
             <VehicleForm
 
                 /*
-                 * When null,
-                 * Add mode.
-                 *
-                 * Otherwise
-                 * Update mode.
+                 * null -> Add
+                 * object -> Edit
                  */
                 initialValues={editingVehicle}
 
-                onSubmit={
-
-                    editingVehicle
-
-                        ? handleUpdateVehicle
-
-                        : handleAddVehicle
-
-                }
+                onSubmit={handleSubmitVehicle}
 
                 buttonText={
 
@@ -226,8 +238,6 @@ export default function AdminDashboard() {
                 }
 
             />
-
-            {/* Vehicle Table */}
 
             <VehicleTable
 

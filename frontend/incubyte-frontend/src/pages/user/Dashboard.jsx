@@ -23,9 +23,9 @@ export default function Dashboard() {
 
         try {
 
-            const response = await getVehicles(); // AxiosResponse object
+            const data = await getVehicles();
 
-            setVehicles(response.data); // Actual vehicle array
+            setVehicles(data);
 
         }
 
@@ -57,7 +57,7 @@ export default function Dashboard() {
             const response = await searchVehicles(filters);
 
             // Save filtered list
-            setVehicles(response.data);
+            setVehicles(response);
 
         }
 

@@ -2,16 +2,24 @@ import axiosInstance from "../api/axios";
 
 export const getVehicles = async () => {
 
-    const response = await axiosInstance.get("/vehicles"); // Fetch all vehicles
+    const response = await axiosInstance.get("/vehicles");
 
-    return response.data; // Return only JSON payload
+    return response.data;
 
 };
 
-export const searchVehicles = (params) =>
-    axiosInstance.get("/vehicles/search", {
-        params,
-    });
+export const searchVehicles = async (params) => {
+
+    const response = await axiosInstance.get(
+        "/vehicles/search",
+        {
+            params,
+        }
+    );
+
+    return response.data;
+
+};
 
 export const addVehicle = (data) =>
     axiosInstance.post("/vehicles", data);
