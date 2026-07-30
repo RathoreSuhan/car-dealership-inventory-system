@@ -366,3 +366,38 @@ Implement inventory restocking with proper validation and clean service-layer de
 - Added a REST endpoint for restocking inventory.
 - Refactored the service by introducing a dedicated exception to reject invalid restock quantities.
 - Kept validation within the service layer to preserve separation of concerns.
+
+
+## Prompt
+
+Implement vehicle deletion using Test-Driven Development while following SOLID principles.
+
+## AI Assistance Summary
+
+### Goal
+
+Implement the minimum production code required to satisfy the failing delete vehicle test.
+
+### Guidance Received
+
+- Added deleteVehicle() in VehicleService.
+- Retrieved the entity before deletion to ensure proper exception handling.
+- Added DELETE endpoint returning HTTP 204 No Content.
+- Kept the implementation minimal to satisfy the GREEN phase before refactoring.
+
+## Prompt
+
+Refactor the VehicleService tests after completing multiple TDD cycles while preserving behavior and following SOLID principles.
+
+## AI Assistance Summary
+
+### Goal
+
+Improve test readability and maintainability without changing application behavior.
+
+### Guidance Received
+
+- Replaced manual mock creation with @Mock and @InjectMocks.
+- Added @BeforeEach for centralized Mockito initialization.
+- Extracted reusable helper methods for test data creation.
+- Removed duplicated setup code while preserving all existing test behavior.

@@ -3,9 +3,12 @@ package com.incubyte.backend.vehicle.service;
 import com.incubyte.backend.vehicle.dto.CreateVehicleRequest;
 import com.incubyte.backend.vehicle.dto.VehicleResponse;
 import com.incubyte.backend.vehicle.entity.Vehicle;
-import com.incubyte.backend.vehicle.service.VehicleService;
+import org.junit.jupiter.api.BeforeEach;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import com.incubyte.backend.vehicle.repository.VehicleRepository;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockitoAnnotations;
 
 import java.util.Optional;
 
@@ -16,25 +19,21 @@ import static org.mockito.Mockito.*;
 
 class VehicleServiceTest {
 
+    @Mock
+    private VehicleRepository repository;
+
+    @InjectMocks
+    private VehicleService service;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
+
     @Test
     void shouldAddVehicleSuccessfully() {
 
-        VehicleRepository repository =
-                mock(VehicleRepository.class);
-
-        VehicleService service =
-                new VehicleService(repository);
-
-        CreateVehicleRequest request =
-                new CreateVehicleRequest(
-
-                        "Toyota",
-                        "Fortuner",
-                        "SUV",
-                        4200000.0,
-                        10
-
-                );
+        CreateVehicleRequest request = createRequest();
 
         when(repository.save(any(Vehicle.class)))
                 .thenAnswer(invocation -> {
@@ -60,19 +59,7 @@ class VehicleServiceTest {
     @Test
     void shouldUpdateVehicleSuccessfully() {
 
-        // Arrange
-        VehicleRepository repository = mock(VehicleRepository.class);
-
-        VehicleService service = new VehicleService(repository);
-
-        Vehicle existingVehicle = Vehicle.builder()
-                .id(1L)
-                .make("Toyota")
-                .model("Fortuner")
-                .category("SUV")
-                .price(4200000.0)
-                .quantity(5)
-                .build();
+        Vehicle existingVehicle = createVehicle();
 
         when(repository.findById(1L))
                 .thenReturn(Optional.of(existingVehicle));
@@ -80,14 +67,7 @@ class VehicleServiceTest {
         when(repository.save(any(Vehicle.class)))
                 .thenAnswer(invocation -> invocation.getArgument(0));
 
-        CreateVehicleRequest request =
-                new CreateVehicleRequest(
-                        "Toyota",
-                        "Legender",
-                        "SUV",
-                        4500000.0,
-                        8
-                );
+        CreateVehicleRequest request = createRequest();
 
         // Act
         VehicleResponse response =
@@ -103,22 +83,7 @@ class VehicleServiceTest {
     @Test
     void shouldPurchaseVehicleSuccessfully() {
 
-        // Arrange
-
-        VehicleRepository repository =
-                mock(VehicleRepository.class);
-
-        VehicleService service =
-                new VehicleService(repository);
-
-        Vehicle vehicle = Vehicle.builder()
-                .id(1L)
-                .make("Toyota")
-                .model("Fortuner")
-                .category("SUV")
-                .price(4200000.0)
-                .quantity(5)
-                .build();
+        Vehicle vehicle = createVehicle();
 
         when(repository.findById(1L))
                 .thenReturn(Optional.of(vehicle));
@@ -146,22 +111,7 @@ class VehicleServiceTest {
     @Test
     void shouldRestockVehicleSuccessfully() {
 
-        // Arrange
-
-        VehicleRepository repository =
-                mock(VehicleRepository.class);
-
-        VehicleService service =
-                new VehicleService(repository);
-
-        Vehicle vehicle = Vehicle.builder()
-                .id(1L)
-                .make("Toyota")
-                .model("Legender")
-                .category("SUV")
-                .price(4500000.0)
-                .quantity(5)
-                .build();
+        Vehicle vehicle = createVehicle();
 
         when(repository.findById(1L))
                 .thenReturn(Optional.of(vehicle));
@@ -193,24 +143,7 @@ class VehicleServiceTest {
     @Test
     void shouldDeleteVehicleSuccessfully() {
 
-        // Arrange
-
-        VehicleRepository repository =
-                mock(VehicleRepository.class);
-
-        VehicleService service =
-                new VehicleService(repository);
-
-        Vehicle vehicle = Vehicle.builder()
-
-                .id(1L)
-                .make("Toyota")
-                .model("Legender")
-                .category("SUV")
-                .price(4500000.0)
-                .quantity(5)
-
-                .build();
+        Vehicle vehicle = createVehicle();
 
         when(repository.findById(1L))
 
@@ -225,6 +158,46 @@ class VehicleServiceTest {
         verify(repository)
 
                 .delete(vehicle);
+
+    }
+
+
+    private Vehicle createVehicle() {
+
+        return Vehicle.builder()
+
+                .id(1L)
+
+                .make("Toyota")
+
+                .model("Legender")
+
+                .category("SUV")
+
+                .price(4500000.0)
+
+                .quantity(5)
+
+                .build();
+
+    }
+
+
+    private CreateVehicleRequest createRequest() {
+
+        return new CreateVehicleRequest(
+
+                "Toyota",
+
+                "Legender",
+
+                "SUV",
+
+                4500000.0,
+
+                8
+
+        );
 
     }
 }
