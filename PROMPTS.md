@@ -563,8 +563,23 @@ Completed:
 - Removed default Vite starter content
 - Simplified App.jsx to a clean starting point
 
-Status:
-✅ Complete
 
-Commit:
-chore(frontend): initialize React application with Vite
+
+## Prompt
+
+Implement JWT authentication in the React frontend by integrating the existing Spring Boot authentication APIs. Centralize authentication using React Context, create protected routes, and persist the JWT across page refreshes.
+
+## AI Assistance Summary
+
+### Goal
+
+Build a reusable authentication layer for the React application that works with the existing Spring Security JWT backend.
+
+### Guidance Received
+
+- Created Login and Register pages connected to the backend authentication endpoints.
+- Configured AuthContext to manage login, logout, authentication state, and JWT persistence.
+- Added a reusable `useAuth` custom hook for accessing authentication state throughout the application.
+- Implemented a `PrivateRoute` component to protect authenticated pages.
+- Configured Axios to automatically attach the JWT in the `Authorization` header for every protected API request.
+- Redirected users appropriately after successful login and registration.
