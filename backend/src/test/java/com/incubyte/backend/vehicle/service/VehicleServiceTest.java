@@ -69,7 +69,7 @@ class VehicleServiceTest {
                 .make("Toyota")
                 .model("Fortuner")
                 .category("SUV")
-                .price(4200000)
+                .price(4200000.0)
                 .quantity(5)
                 .build();
 
@@ -84,7 +84,7 @@ class VehicleServiceTest {
                         "Toyota",
                         "Legender",
                         "SUV",
-                        4500000,
+                        4500000.0,
                         8
                 );
 
