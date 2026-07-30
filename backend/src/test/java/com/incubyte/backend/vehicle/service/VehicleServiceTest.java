@@ -1,10 +1,14 @@
 package com.incubyte.backend.vehicle.service;
 
 import com.incubyte.backend.vehicle.dto.CreateVehicleRequest;
+import com.incubyte.backend.vehicle.dto.VehicleResponse;
 import com.incubyte.backend.vehicle.entity.Vehicle;
 import com.incubyte.backend.vehicle.repository.VehicleRepository;
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -49,6 +53,50 @@ class VehicleServiceTest {
 
         );
 
+    }
+
+
+    @Test
+    void shouldUpdateVehicleSuccessfully() {
+
+        // Arrange
+        VehicleRepository repository = mock(VehicleRepository.class);
+
+        VehicleService service = new VehicleService(repository);
+
+        Vehicle existingVehicle = Vehicle.builder()
+                .id(1L)
+                .make("Toyota")
+                .model("Fortuner")
+                .category("SUV")
+                .price(4200000)
+                .quantity(5)
+                .build();
+
+        when(repository.findById(1L))
+                .thenReturn(Optional.of(existingVehicle));
+
+        when(repository.save(any(Vehicle.class)))
+                .thenAnswer(invocation -> invocation.getArgument(0));
+
+        CreateVehicleRequest request =
+                new CreateVehicleRequest(
+                        "Toyota",
+                        "Legender",
+                        "SUV",
+                        4500000,
+                        8
+                );
+
+        // Act
+        VehicleResponse response =
+                service.updateVehicle(1L, request);
+
+        // Assert
+        assertEquals("Legender", response.getModel());
+        assertEquals(8, response.getQuantity());
+
+        verify(repository).save(existingVehicle);
     }
 
 }

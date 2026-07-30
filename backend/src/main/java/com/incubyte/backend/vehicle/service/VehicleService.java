@@ -32,6 +32,34 @@ public class VehicleService {
     }
 
     /**
+     * Updates an existing vehicle.
+     */
+    public VehicleResponse updateVehicle(
+            Long id,
+            CreateVehicleRequest request
+    ) {
+
+        // Fetch vehicle from database.
+        Vehicle vehicle = vehicleRepository
+
+                .findById(id)
+
+                .orElseThrow(() -> new RuntimeException("Vehicle not found"));
+
+        // Update all editable fields.
+        vehicle.setMake(request.getMake());
+        vehicle.setModel(request.getModel());
+        vehicle.setCategory(request.getCategory());
+        vehicle.setPrice(request.getPrice());
+        vehicle.setQuantity(request.getQuantity());
+
+        // Persist updated entity.
+        vehicle = vehicleRepository.save(vehicle);
+
+        return VehicleMapper.toResponse(vehicle);
+    }
+
+    /**
      * Search by make.
      */
     public List<VehicleResponse> searchByMake(String make) {
