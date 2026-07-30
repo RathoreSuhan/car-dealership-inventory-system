@@ -1,5 +1,6 @@
 package com.incubyte.backend.vehicle.service;
 
+import com.incubyte.backend.exception.OutOfStockException;
 import com.incubyte.backend.exception.VehicleNotFoundException;
 import com.incubyte.backend.vehicle.dto.CreateVehicleRequest;
 import com.incubyte.backend.vehicle.dto.VehicleResponse;
@@ -83,6 +84,16 @@ public class VehicleService {
                         )
 
                 );
+
+        if (vehicle.getQuantity() <= 0) {
+
+            throw new OutOfStockException(
+
+                    "Vehicle is out of stock"
+
+            );
+
+        }
 
         vehicle.setQuantity(
 
