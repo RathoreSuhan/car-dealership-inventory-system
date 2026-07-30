@@ -65,6 +65,39 @@ public class VehicleService {
     }
 
     /**
+     * Purchases one vehicle by reducing
+     * available quantity.
+     */
+    public VehicleResponse purchaseVehicle(Long id) {
+
+        Vehicle vehicle = vehicleRepository
+
+                .findById(id)
+
+                .orElseThrow(
+
+                        () -> new VehicleNotFoundException(
+
+                                "Vehicle not found"
+
+                        )
+
+                );
+
+        vehicle.setQuantity(
+
+                vehicle.getQuantity() - 1
+
+        );
+
+        vehicle = vehicleRepository.save(vehicle);
+
+        return VehicleMapper.toResponse(vehicle);
+
+    }
+
+
+    /**
      * Search by make.
      */
     public List<VehicleResponse> searchByMake(String make) {

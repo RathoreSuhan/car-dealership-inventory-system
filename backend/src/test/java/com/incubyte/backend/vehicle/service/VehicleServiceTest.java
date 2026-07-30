@@ -3,6 +3,7 @@ package com.incubyte.backend.vehicle.service;
 import com.incubyte.backend.vehicle.dto.CreateVehicleRequest;
 import com.incubyte.backend.vehicle.dto.VehicleResponse;
 import com.incubyte.backend.vehicle.entity.Vehicle;
+import com.incubyte.backend.vehicle.service.VehicleService;
 import com.incubyte.backend.vehicle.repository.VehicleRepository;
 import org.junit.jupiter.api.Test;
 
@@ -103,6 +104,13 @@ class VehicleServiceTest {
     void shouldPurchaseVehicleSuccessfully() {
 
         // Arrange
+
+        VehicleRepository repository =
+                mock(VehicleRepository.class);
+
+        VehicleService service =
+                new VehicleService(repository);
+
         Vehicle vehicle = Vehicle.builder()
                 .id(1L)
                 .make("Toyota")
@@ -112,19 +120,26 @@ class VehicleServiceTest {
                 .quantity(5)
                 .build();
 
-        when(vehicleRepository.findById(1L))
+        when(repository.findById(1L))
                 .thenReturn(Optional.of(vehicle));
 
-        when(vehicleRepository.save(any(Vehicle.class)))
+        when(repository.save(any(Vehicle.class)))
                 .thenAnswer(invocation -> invocation.getArgument(0));
 
         // Act
+
         VehicleResponse response =
-                vehicleService.purchaseVehicle(1L);
+                service.purchaseVehicle(1L);
 
         // Assert
-        assertEquals(4, response.getQuantity());
 
-        verify(vehicleRepository).save(vehicle);
+        assertEquals(
+                4,
+                response.getQuantity()
+        );
+
+        verify(repository)
+                .save(vehicle);
+
     }
 }
