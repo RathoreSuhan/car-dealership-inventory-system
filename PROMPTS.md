@@ -620,3 +620,21 @@ Allow users to filter vehicles by make, model, category, and price range without
 - Connected the dashboard to the `/api/vehicles/search` endpoint through the existing service layer.
 - Fixed Axios response handling by using `response.data` instead of the full response object.
 - Kept the search UI independent from the vehicle card component for better reusability.
+
+
+## Prompt
+
+Build the frontend admin module for vehicle inventory management using the existing Spring Boot CRUD APIs.
+
+## AI Assistance Summary
+
+### Goal
+
+Create a reusable admin interface for managing vehicles without changing the backend API contract.
+
+### Guidance Received
+
+- Planned a dedicated admin dashboard for inventory management.
+- Designed reusable components for vehicle forms, tables, and confirmation dialogs.
+- Reused the existing Axios service layer for create, update, delete, and restock operations.
+- Structured the UI to keep business logic inside pages and presentation logic inside reusable components.
