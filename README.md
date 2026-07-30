@@ -203,6 +203,22 @@ AI assistance was used to
 
 All production code was reviewed, tested, and validated before being committed.
 
+
+## Overall Development Approach
+
+### Principles Followed
+
+- Test-Driven Development (Red → Green → Refactor)
+- SOLID Principles
+- Clean Code
+- Layered Architecture
+- DTO and Mapper Pattern
+- Constructor Injection
+- Repository Pattern
+- Role-Based Authorization using Spring Security
+- Incremental Git Commits
+
+
 ## Future Improvements
 
 - React Frontend
