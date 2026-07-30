@@ -602,3 +602,21 @@ Develop the first functional dashboard that consumes backend APIs and displays t
 - Integrated the purchase API and refreshed inventory after successful purchases.
 - Added loading indicators and toast notifications for better user feedback.
 - Updated the vehicle service to return API payloads directly for simpler component logic.
+
+
+## Prompt
+
+Implement a searchable vehicle dashboard in the React frontend using the existing Spring Boot search endpoint.
+
+## AI Assistance Summary
+
+### Goal
+
+Allow users to filter vehicles by make, model, category, and price range without changing the backend API.
+
+### Guidance Received
+
+- Created a reusable `SearchBar` component for collecting filter criteria.
+- Connected the dashboard to the `/api/vehicles/search` endpoint through the existing service layer.
+- Fixed Axios response handling by using `response.data` instead of the full response object.
+- Kept the search UI independent from the vehicle card component for better reusability.
